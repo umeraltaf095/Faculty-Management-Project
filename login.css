@@ -1,0 +1,96 @@
+/* General Page Style */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f9ff; /* very light background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  color: black;
+}
+
+/* Login Container */
+.login-container {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  width: 350px;
+  text-align: center;
+}
+
+.login-container h2 {
+  margin-bottom: 20px;
+  font-size: 24px;
+  color: black;
+}
+
+/* Form Inputs */
+.login-form {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.login-form label {
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.login-form input {
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+/* Buttons */
+.button-group {
+  display: flex;
+  justify-content: space-between;
+}
+
+.btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.btn.login {
+  background-color: #5dade2; /* light blue */
+  color: white;
+}
+
+.btn.login:hover {
+  background-color: #3498db; /* darker blue */
+}
+
+.btn.cancel {
+  background-color: white;
+  border: 1px solid black;
+  color: black;
+}
+
+.btn.cancel:hover {
+  background-color: #f2f2f2;
+}
+
+/* Simple User Link */
+.simple-user-link {
+  margin-top: 20px;
+}
+
+.simple-user-link a {
+  text-decoration: none;
+  color: #3498db;
+  font-weight: bold;
+}
+
+.simple-user-link a:hover {
+  text-decoration: underline;
+}

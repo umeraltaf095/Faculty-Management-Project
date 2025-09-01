@@ -1,0 +1,81 @@
+/* Faculty List Page */
+.faculty-container {
+  width: 100%;          /* Take full screen width */
+  padding: 20px;
+  background: white;
+  box-sizing: border-box;
+}
+
+.faculty-container h2 {
+  text-align: center;
+  margin-bottom: 25px;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+/* Search Section */
+.search-section {
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.search-labels, 
+.search-bars {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* Four equal columns */
+  gap: 15px;
+  width: 100%;
+}
+
+.search-labels span {
+  text-align: center;
+  font-weight: bold;
+}
+
+.search-bars input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Faculty Table */
+.faculty-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.faculty-table th, 
+.faculty-table td {
+  border: 1px solid #ddd;
+  padding: 12px;
+  text-align: left;
+  font-size: 14px;
+}
+
+.faculty-table th {
+  background-color: #5dade2;
+  color: white;
+}
+
+.faculty-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.faculty-table tr:hover {
+  background-color: #f1f9ff;
+}
+
+/* Action Symbol */
+.view-symbol {
+  cursor: pointer;
+  font-size: 18px;
+  transition: 0.3s;
+}
+
+.view-symbol:hover {
+  color: #3498db;
+}
