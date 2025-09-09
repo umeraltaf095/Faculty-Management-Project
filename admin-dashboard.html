@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Faculty List</title>
+    <link rel="stylesheet" href="admin-dashboard.css" />
+  </head>
+  <body>
+    <div class="faculty-container">
+      <h2>Faculty Details</h2>
+
+      <!-- Search Section -->
+      <div class="search-section">
+        <div class="search-labels">
+          <span>Name</span>
+          <span>Department</span>
+          <span>Course Taught</span>
+          <span>Area of Expertise</span>
+        </div>
+        <div class="search-bars">
+          <input type="text" placeholder="Search by name" />
+          <input type="text" placeholder="Search by department" />
+          <input type="text" placeholder="Search by course" />
+          <input type="text" placeholder="Search by expertise" />
+        </div>
+
+        <!-- Add Button -->
+        <div class="add-btn-container">
+          <button class="btn-add">Add</button>
+        </div>
+      </div>
+
+      <!-- Table Section -->
+      <table class="faculty-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Department</th>
+            <th>Courses Taught</th>
+            <th>Expertise</th>
+            <th>Email</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Dr. Ali Hussain</td>
+            <td>Computer Science</td>
+            <td>Database Systems, Web Development</td>
+            <td>Databases, APIs</td>
+            <td>ali.hussain@university.edu</td>
+            <td><span class="view-symbol">👁️</span></td>
+          </tr>
+          <tr>
+            <td>Dr. Sara Khan</td>
+            <td>Software Engineering</td>
+            <td>Software Testing, Agile</td>
+            <td>QA, Project Management</td>
+            <td>sara.khan@univers</td>
+            <td><span class="view-symbol">👁️</span></td>
+          </tr>
+          <tr>
+            <td>Dr. Ahmed Raza</td>
+            <td>Artificial Intelligence</td>
+            <td>Machine Learning, NLP</td>
+            <td>AI, Deep Learning</td>
+            <td>ahmed.raza@university.edu</td>
+            <td><span class="view-symbol">👁️</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Modal (hidden by default) -->
+    <div class="modal" id="addModal">
+      <div class="modal-content">
+        <h3>Add Faculty</h3>
+        <form class="modal-form">
+          <input type="text" name="name" placeholder="Enter name" required />
+          <input
+            type="text"
+            name="department"
+            placeholder="Enter department"
+            required
+          />
+          <input
+            type="text"
+            name="courses_taught"
+            placeholder="Enter courses taught"
+            required
+          />
+          <input
+            type="text"
+            name="expertise"
+            placeholder="Enter expertise"
+            required
+          />
+          <input
+            type="text"
+            name="interests"
+            placeholder="Enter interests"
+            required
+          />
+          <input
+            type="email"
+            name="contact"
+            placeholder="Enter email"
+            required
+          />
+
+          <div class="modal-buttons">
+            <button type="button" class="btn-cancel">Cancel</button>
+            <button type="submit" class="btn-add-modal">Add</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <script src="faculty-list.js"></script>
+    <script src="admin-dashboard.js"></script>
+  </body>
+</html>
