@@ -4,21 +4,21 @@ document.addEventListener("DOMContentLoaded", () => {
   const cancelBtn = document.querySelector(".btn-cancel");
   const modalForm = document.querySelector(".modal-form");
 
-  // Show modal when Add button is clicked
+ 
   addBtn.addEventListener("click", () => {
     modal.style.display = "flex";
   });
 
-  // Hide modal when Cancel button is clicked
+  
   cancelBtn.addEventListener("click", () => {
     modal.style.display = "none";
   });
 
-  // Handle form submission
+ 
   modalForm.addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    // Collect input values
+    
     const facultyData = {
       name: modalForm.querySelector("input[name='name']").value,
       department: modalForm.querySelector("input[name='department']").value,

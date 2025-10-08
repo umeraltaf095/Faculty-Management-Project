@@ -1,7 +1,7 @@
-/* General Page Style */
+
 body {
   font-family: Arial, sans-serif;
-  background-color: #f4f9ff; /* very light background */
+  background-color: #f4f9ff; 
   display: flex;
   justify-content: center;
   align-items: center;
@@ -10,7 +10,7 @@ body {
   color: black;
 }
 
-/* Login Container */
+
 .login-container {
   background: white;
   padding: 30px;
@@ -26,7 +26,7 @@ body {
   color: black;
 }
 
-/* Form Inputs */
+
 .login-form {
   display: flex;
   flex-direction: column;
@@ -46,7 +46,7 @@ body {
   font-size: 14px;
 }
 
-/* Buttons */
+
 .button-group {
   display: flex;
   justify-content: space-between;
@@ -80,7 +80,6 @@ body {
   background-color: #f2f2f2;
 }
 
-/* Simple User Link */
 .simple-user-link {
   margin-top: 20px;
 }

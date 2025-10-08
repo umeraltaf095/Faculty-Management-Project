@@ -1,4 +1,4 @@
-/* Faculty List Page */
+
 .faculty-container {
   width: 100%;         
   padding: 20px;
@@ -13,7 +13,7 @@
   font-weight: bold;
 }
 
-/* Search Section */
+
 .search-section {
   margin-bottom: 20px;
   width: 100%;
@@ -41,7 +41,6 @@
   box-sizing: border-box;
 }
 
-/* Add Button */
 .add-btn-container {
   margin-top: 15px;
   text-align: right;
@@ -62,7 +61,7 @@
   background-color: #2c80b4;
 }
 
-/* Faculty Table */
+
 .faculty-table {
   width: 100%;
   border-collapse: collapse;
@@ -90,7 +89,7 @@
   background-color: #f1f9ff;
 }
 
-/* Action Symbol */
+
 .view-symbol {
   cursor: pointer;
   font-size: 18px;
@@ -101,15 +100,15 @@
   color: #3498db;
 }
 
-/* Modal */
+
 .modal {
-  display: none; /* hidden by default */
+  display: none; 
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0,0,0,0.5); /* dark overlay */
+  background: rgba(0,0,0,0.5); 
   justify-content: center;
   align-items: center;
 }
@@ -142,7 +141,7 @@
   transition: background 0.3s;
 }
 
-/* Cancel Button */
+
 .btn-cancel {
   background: #e74c3c;
   color: white;
@@ -151,7 +150,7 @@
   background: #c0392b;
 }
 
-/* Add Button inside Modal */
+
 .btn-add-modal {
   background: #3498db;
   color: white;
@@ -160,7 +159,7 @@
   background: #2c80b4;
 }
 
-/* Modal Input Fields */
+
 .modal-form input {
   width: 100%;
   padding: 10px;

@@ -2,7 +2,7 @@
 
 const apiBaseUrl = "http://localhost/my-api/faculty.php";
 
-// Select DOM elements
+
 const tableBody = document.querySelector(".faculty-table tbody");
 const searchInputs = document.querySelectorAll(".search-bars input");
 
@@ -15,7 +15,7 @@ async function fetchFaculty() {
     const courses = searchInputs[2].value.trim();
     const expertise = searchInputs[3].value.trim();
 
-    // Fetch directly with the complete URL (no separate variable)
+   
     const response = await fetch(
       apiBaseUrl +
       "?name=" + name +
@@ -26,7 +26,7 @@ async function fetchFaculty() {
 
     const data = await response.json();
 
-    // Handle single object or array
+   
     const facultyList = Array.isArray(data) ? data : [data];
 
     renderTable(facultyList);
@@ -35,7 +35,7 @@ async function fetchFaculty() {
   }
 }
 
-// Function to render table rows
+
 function renderTable(facultyList) {
   tableBody.innerHTML = ""; // clear table
 
@@ -64,5 +64,5 @@ searchInputs.forEach(input => {
   input.addEventListener("input", fetchFaculty);
 });
 
-// Fetch all faculty initially
+// Fetch all faculty after adding new faculty
 fetchFaculty();

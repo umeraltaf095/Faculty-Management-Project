@@ -1,6 +1,6 @@
-/* Faculty List Page */
+
 .faculty-container {
-  width: 100%;          /* Take full screen width */
+  width: 100%;         
   padding: 20px;
   background: white;
   box-sizing: border-box;
@@ -13,7 +13,7 @@
   font-weight: bold;
 }
 
-/* Search Section */
+
 .search-section {
   margin-bottom: 20px;
   width: 100%;
@@ -41,7 +41,7 @@
   box-sizing: border-box;
 }
 
-/* Faculty Table */
+
 .faculty-table {
   width: 100%;
   border-collapse: collapse;
@@ -69,7 +69,7 @@
   background-color: #f1f9ff;
 }
 
-/* Action Symbol */
+
 .view-symbol {
   cursor: pointer;
   font-size: 18px;
