@@ -1,7 +1,4 @@
-// faculty-list.js
-
 const apiBaseUrl = "http://localhost/my-api/faculty.php";
-
 
 const tableBody = document.querySelector(".faculty-table tbody");
 const searchInputs = document.querySelectorAll(".search-bars input");
@@ -9,13 +6,11 @@ const searchInputs = document.querySelectorAll(".search-bars input");
 // Function to fetch faculty data
 async function fetchFaculty() {
   try {
-    // Take values directly from search inputs
     const name = searchInputs[0].value.trim();
     const department = searchInputs[1].value.trim();
     const courses = searchInputs[2].value.trim();
     const expertise = searchInputs[3].value.trim();
 
-   
     const response = await fetch(
       apiBaseUrl +
       "?name=" + name +
@@ -25,8 +20,6 @@ async function fetchFaculty() {
     );
 
     const data = await response.json();
-
-   
     const facultyList = Array.isArray(data) ? data : [data];
 
     renderTable(facultyList);
@@ -34,7 +27,6 @@ async function fetchFaculty() {
     console.error("Error fetching faculty:", error);
   }
 }
-
 
 function renderTable(facultyList) {
   tableBody.innerHTML = ""; // clear table
@@ -52,7 +44,11 @@ function renderTable(facultyList) {
         <td>${faculty.courses_taught}</td>
         <td>${faculty.expertise}</td>
         <td>${faculty.contact}</td>
-        <td><span class="view-symbol">👁️</span></td>
+        <td>
+          <span class="view-symbol" title="View">👁️</span>
+          <span class="edit-symbol" title="Edit">✏️</span>
+          <span class="delete-symbol" title="Delete">🗑️</span>
+        </td>
       </tr>
     `;
     tableBody.insertAdjacentHTML("beforeend", row);
@@ -64,5 +60,44 @@ searchInputs.forEach(input => {
   input.addEventListener("input", fetchFaculty);
 });
 
-// Fetch all faculty after adding new faculty
+// Initial load
 fetchFaculty();
+
+// Global click event listener for all symbols
+document.addEventListener("click", function (e) {
+  // VIEW ICON
+  if (e.target.classList.contains("view-symbol")) {
+    alert("View clicked!");
+  }
+
+  // EDIT ICON
+  if (e.target.classList.contains("edit-symbol")) {
+    alert("Edit clicked!");
+  }
+
+  // DELETE ICON
+  if (e.target.classList.contains("delete-symbol")) {
+    const isAdmin = document.querySelector("#addModal") !== null;
+
+    if (isAdmin) {
+      // Only show confirmation modal if user is admin
+      const deleteModal = document.getElementById("deleteModal");
+      const cancelBtn = deleteModal.querySelector(".btn-cancel-delete");
+      const confirmBtn = deleteModal.querySelector(".btn-confirm-delete");
+
+      deleteModal.style.display = "flex";
+
+      // Close modal when cancel is clicked
+      cancelBtn.onclick = () => {
+        deleteModal.style.display = "none";
+      };
+
+      // Just close on confirm — no deletion
+      confirmBtn.onclick = () => {
+        deleteModal.style.display = "none";
+      };
+    } 
+    // else: do nothing (delete icon disabled for normal users)
+  }
+});
+
