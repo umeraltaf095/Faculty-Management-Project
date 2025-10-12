@@ -36,23 +36,24 @@ function renderTable(facultyList) {
     return;
   }
 
-  facultyList.forEach(faculty => {
-    const row = `
-      <tr>
-        <td>${faculty.name}</td>
-        <td>${faculty.department}</td>
-        <td>${faculty.courses_taught}</td>
-        <td>${faculty.expertise}</td>
-        <td>${faculty.contact}</td>
-        <td>
-          <span class="view-symbol" title="View">👁️</span>
-          <span class="edit-symbol" title="Edit">✏️</span>
-          <span class="delete-symbol" title="Delete">🗑️</span>
-        </td>
-      </tr>
-    `;
-    tableBody.insertAdjacentHTML("beforeend", row);
-  });
+ facultyList.forEach(faculty => {
+  const row = `
+    <tr data-id="${faculty.id}">
+      <td>${faculty.name}</td>
+      <td>${faculty.department}</td>
+      <td>${faculty.courses_taught}</td>
+      <td>${faculty.expertise}</td>
+      <td>${faculty.contact}</td>
+      <td>
+        <span class="view-symbol">👁️</span>
+        <span class="edit-symbol">✏️</span>
+        <span class="delete-symbol">🗑️</span>
+      </td>
+    </tr>
+  `;
+  tableBody.insertAdjacentHTML("beforeend", row);
+});
+
 }
 
 // Event listeners for search inputs
@@ -75,29 +76,51 @@ document.addEventListener("click", function (e) {
     alert("Edit clicked!");
   }
 
-  // DELETE ICON
-  if (e.target.classList.contains("delete-symbol")) {
-    const isAdmin = document.querySelector("#addModal") !== null;
+ // DELETE ICON
+if (e.target.classList.contains("delete-symbol")) {
+  const isAdmin = document.querySelector("#addModal") !== null;
 
-    if (isAdmin) {
-      // Only show confirmation modal if user is admin
-      const deleteModal = document.getElementById("deleteModal");
-      const cancelBtn = deleteModal.querySelector(".btn-cancel-delete");
-      const confirmBtn = deleteModal.querySelector(".btn-confirm-delete");
+  if (isAdmin) {
+    const row = e.target.closest("tr");
+    const facultyName = row.children[0].textContent.trim(); // optional for message
+    const facultyId = row.getAttribute("data-id"); // we'll set this later
 
-      deleteModal.style.display = "flex";
+    const deleteModal = document.getElementById("deleteModal");
+    const cancelBtn = deleteModal.querySelector(".btn-cancel-delete");
+    const confirmBtn = deleteModal.querySelector(".btn-confirm-delete");
 
-      // Close modal when cancel is clicked
-      cancelBtn.onclick = () => {
+    deleteModal.style.display = "flex";
+
+    // Cancel button hides modal
+    cancelBtn.onclick = () => {
+      deleteModal.style.display = "none";
+    };
+
+    // Confirm deletion
+    confirmBtn.onclick = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost/my-api/faculty.php?id=${facultyId}`,
+          { method: "DELETE" }
+        );
+
+        if (response.ok) {
+          // Remove row from table
+          row.remove();
+
+          alert(`Faculty "${facultyName}" deleted successfully.`);
+        } else {
+          alert("Failed to delete faculty. Please try again.");
+        }
+      } catch (error) {
+        console.error("Error deleting faculty:", error);
+        alert("An error occurred while deleting the record.");
+      } finally {
         deleteModal.style.display = "none";
-      };
-
-      // Just close on confirm — no deletion
-      confirmBtn.onclick = () => {
-        deleteModal.style.display = "none";
-      };
-    } 
-    // else: do nothing (delete icon disabled for normal users)
+      }
+    };
   }
+}
+
 });
 
