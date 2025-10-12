@@ -1,9 +1,9 @@
 <?php
-// db.php
+
 $host = '127.0.0.1';
 $db   = 'faculty_info';
-$user = 'root';      // XAMPP default
-$pass = '';          // XAMPP default is empty password
+$user = 'root';      
+$pass = '';          
 $charset = 'utf8mb4';
 
 $dsn = "mysql:host=$host;dbname=$db;charset=$charset";

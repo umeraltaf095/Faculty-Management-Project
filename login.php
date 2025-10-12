@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 
 
 
-require 'db.php'; // include DB connection
+require 'db.php'; 
 
 // Get JSON data from frontend
 $data = json_decode(file_get_contents("php://input"), true);
@@ -26,7 +26,7 @@ if (!$email || !$password) {
     exit;
 }
 
-// Query database
+
 $stmt = $pdo->prepare("SELECT * FROM users WHERE email = ? AND password = ?");
 $stmt->execute([$email, $password]);
 $user = $stmt->fetch();
