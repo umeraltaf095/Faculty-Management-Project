@@ -36,25 +36,34 @@ function renderTable(facultyList) {
     return;
   }
 
- facultyList.forEach(faculty => {
-  const row = `
-    <tr data-id="${faculty.id}">
-      <td>${faculty.name}</td>
-      <td>${faculty.department}</td>
-      <td>${faculty.courses_taught}</td>
-      <td>${faculty.expertise}</td>
-      <td>${faculty.contact}</td>
-      <td>
-        <span class="view-symbol">👁️</span>
-        <span class="edit-symbol">✏️</span>
-        <span class="delete-symbol">🗑️</span>
-      </td>
-    </tr>
-  `;
-  tableBody.insertAdjacentHTML("beforeend", row);
-});
-
+  facultyList.forEach(faculty => {
+    const row = `
+      <tr 
+        data-id="${faculty.id}" 
+        data-name="${faculty.name}" 
+        data-department="${faculty.department}" 
+        data-courses="${faculty.courses_taught}" 
+        data-expertise="${faculty.expertise}" 
+        data-interests="${faculty.interests}" 
+        data-contact="${faculty.contact}"
+      >
+        <td>${faculty.name}</td>
+        <td>${faculty.department}</td>
+        <td>${faculty.courses_taught}</td>
+        <td>${faculty.expertise}</td>
+        <td>${faculty.interests}</td>
+        <td>${faculty.contact}</td>
+        <td>
+          <span class="view-symbol">👁️</span>
+          <span class="edit-symbol">✏️</span>
+          <span class="delete-symbol">🗑️</span>
+        </td>
+      </tr>
+    `;
+    tableBody.insertAdjacentHTML("beforeend", row);
+  });
 }
+
 
 // Event listeners for search inputs
 searchInputs.forEach(input => {
@@ -71,10 +80,44 @@ document.addEventListener("click", function (e) {
     alert("View clicked!");
   }
 
-  // EDIT ICON
-  if (e.target.classList.contains("edit-symbol")) {
-    alert("Edit clicked!");
-  }
+// EDIT ICON
+if (e.target.classList.contains("edit-symbol")) {
+  const row = e.target.closest("tr");
+
+  // Get data from attributes
+  const id = row.dataset.id;
+  const name = row.dataset.name;
+  const department = row.dataset.department;
+  const courses = row.dataset.courses;
+  const expertise = row.dataset.expertise;
+  const interests = row.dataset.interests;
+  const contact = row.dataset.contact;
+
+  // Open modal and fill form
+  const editModal = document.getElementById("editModal");
+  const form = editModal.querySelector(".modal-form");
+
+  editModal.style.display = "flex";
+
+  // Fill inputs
+  form.querySelector('input[name="name"]').value = name;
+  form.querySelector('input[name="department"]').value = department;
+  form.querySelector('input[name="courses_taught"]').value = courses;
+  form.querySelector('input[name="expertise"]').value = expertise;
+   form.querySelector('input[name="interests"]').value = interests;
+  form.querySelector('input[name="contact"]').value = contact;
+
+  // Optional: store faculty ID in form (for updating later)
+  form.dataset.id = id;
+
+  // Close modal
+  const cancelBtn = editModal.querySelector(".btn-cancel");
+  cancelBtn.onclick = () => {
+    editModal.style.display = "none";
+  };
+}
+
+
 
  // DELETE ICON
 if (e.target.classList.contains("delete-symbol")) {

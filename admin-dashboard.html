@@ -39,6 +39,7 @@
             <th>Department</th>
             <th>Courses Taught</th>
             <th>Expertise</th>
+            <th>Interests</th>
             <th>Email</th>
             <th>Action</th>
           </tr>
@@ -127,6 +128,57 @@
     </div>
   </div>
 </div>
+<!-- Edit Faculty Modal -->
+<div class="modal" id="editModal">
+  <div class="modal-content">
+    <h3>Edit Faculty</h3>
+    <form class="modal-form" id="editForm">
+      <input type="hidden" name="id" />
+
+      <input
+        type="text"
+        name="name"
+        placeholder="Enter name"
+        required
+      />
+      <input
+        type="text"
+        name="department"
+        placeholder="Enter department"
+        required
+      />
+      <input
+        type="text"
+        name="courses_taught"
+        placeholder="Enter courses taught"
+        required
+      />
+      <input
+        type="text"
+        name="expertise"
+        placeholder="Enter expertise"
+        required
+      />
+      <input
+        type="text"
+        name="interests"
+        placeholder="Enter interests"
+      />
+      <input
+        type="email"
+        name="contact"
+        placeholder="Enter email"
+        required
+      />
+
+      <div class="modal-buttons">
+        <button type="button" class="btn-cancel">Cancel</button>
+        <button type="submit" class="btn-add-modal">Save Changes</button>
+      </div>
+    </form>
+  </div>
+</div>
+
 
     <script src="faculty-list.js"></script>
     <script src="admin-dashboard.js"></script>
