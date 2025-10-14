@@ -5,7 +5,7 @@ ob_start();
 // Headers
 header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Methods: GET, POST, DELETE, OPTIONS");
+header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type, Authorization");
 header("Cache-Control: no-cache, must-revalidate");
 header("Expires: 0");
@@ -122,7 +122,58 @@ try {
         ob_end_flush();
         exit;
 
-    } else {
+        } elseif ($method === 'PUT') {
+        // Update a faculty member by ID
+        // Expected: PUT http://localhost/my-api/faculty.php?id=3
+        if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
+            http_response_code(400);
+            echo json_encode(['error' => 'Faculty ID is required for update']);
+            ob_end_flush();
+            exit;
+        }
+
+        $id = intval($_GET['id']);
+
+        // Get input data
+        $name = $input['name'] ?? null;
+        $department = $input['department'] ?? null;
+        $courses = $input['courses_taught'] ?? null;
+        $expertise = $input['expertise'] ?? null;
+        $interests = $input['interests'] ?? null;
+        $contact = $input['contact'] ?? null;
+
+        // Validate required fields
+        if (!$name || !$department || !$courses) {
+            http_response_code(400);
+            echo json_encode(['error' => 'name, department, and courses_taught are required']);
+            ob_end_flush();
+            exit;
+        }
+
+        // Check if faculty exists
+        $check = $pdo->prepare("SELECT id FROM faculty WHERE id = ?");
+        $check->execute([$id]);
+        if ($check->rowCount() === 0) {
+            http_response_code(404);
+            echo json_encode(['error' => 'Faculty not found']);
+            ob_end_flush();
+            exit;
+        }
+
+        // Update faculty
+        $stmt = $pdo->prepare("
+            UPDATE faculty
+            SET name = ?, department = ?, courses_taught = ?, expertise = ?, interests = ?, contact = ?
+            WHERE id = ?
+        ");
+        $stmt->execute([$name, $department, $courses, $expertise, $interests, $contact, $id]);
+
+        http_response_code(200);
+        echo json_encode(['message' => 'Faculty updated successfully']);
+        ob_end_flush();
+        exit;
+    }
+    else {
         http_response_code(405);
         echo json_encode(['error' => 'Method not allowed']);
         ob_end_flush();
