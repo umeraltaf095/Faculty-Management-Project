@@ -99,23 +99,60 @@ if (e.target.classList.contains("edit-symbol")) {
 
   editModal.style.display = "flex";
 
-  // Fill inputs
+  // Fill form fields
   form.querySelector('input[name="name"]').value = name;
   form.querySelector('input[name="department"]').value = department;
   form.querySelector('input[name="courses_taught"]').value = courses;
   form.querySelector('input[name="expertise"]').value = expertise;
-   form.querySelector('input[name="interests"]').value = interests;
+  form.querySelector('input[name="interests"]').value = interests;
   form.querySelector('input[name="contact"]').value = contact;
 
-  // Optional: store faculty ID in form (for updating later)
+  // Store faculty ID in form
   form.dataset.id = id;
 
-  // Close modal
+  // Close modal when Cancel clicked
   const cancelBtn = editModal.querySelector(".btn-cancel");
   cancelBtn.onclick = () => {
     editModal.style.display = "none";
   };
+
+  // Handle UPDATE (PUT request)
+  const saveBtn = editModal.querySelector(".btn-add-modal");
+  saveBtn.onclick = async (event) => {
+    event.preventDefault();
+
+    const updatedData = {
+      name: form.querySelector('input[name="name"]').value.trim(),
+      department: form.querySelector('input[name="department"]').value.trim(),
+      courses_taught: form.querySelector('input[name="courses_taught"]').value.trim(),
+      expertise: form.querySelector('input[name="expertise"]').value.trim(),
+      interests: form.querySelector('input[name="interests"]').value.trim(),
+      contact: form.querySelector('input[name="contact"]').value.trim(),
+    };
+
+    try {
+      const response = await fetch(`http://localhost/my-api/faculty.php?id=${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updatedData),
+      });
+
+      if (response.ok) {
+        alert("Faculty updated successfully!");
+        editModal.style.display = "none";
+        fetchFaculty(); // refresh table to show updated data
+      } else {
+        alert("Failed to update faculty. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error updating faculty:", error);
+      alert("An error occurred while updating the record.");
+    }
+  };
 }
+
 
 
 
