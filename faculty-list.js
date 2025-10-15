@@ -2,6 +2,9 @@ const apiBaseUrl = "http://localhost/my-api/faculty.php";
 
 const tableBody = document.querySelector(".faculty-table tbody");
 const searchInputs = document.querySelectorAll(".search-bars input");
+const viewModal = document.getElementById("viewModal");
+const viewForm = document.getElementById("viewForm");
+const closeBtn = viewModal.querySelector(".btn-close");
 
 // Function to fetch faculty data
 async function fetchFaculty() {
@@ -76,9 +79,51 @@ fetchFaculty();
 // Global click event listener for all symbols
 document.addEventListener("click", function (e) {
   // VIEW ICON
-  if (e.target.classList.contains("view-symbol")) {
-    alert("View clicked!");
+// VIEW ICON — open read-only modal and show details
+if (e.target.classList.contains("view-symbol")) {
+  const row = e.target.closest("tr");
+
+  // Get data from attributes (or show sample text)
+  const name = row?.dataset?.name ?? "Dr. Example Name";
+  const department = row?.dataset?.department ?? "Computer Science";
+  const courses = row?.dataset?.courses ?? "Database Systems, Web Development";
+  const expertise = row?.dataset?.expertise ?? "APIs, Databases";
+  const interests = row?.dataset?.interests ?? "Research, Teaching";
+  const contact = row?.dataset?.contact ?? "email@example.com";
+
+  // Get modal elements
+  const viewModal = document.getElementById("viewModal");
+
+  // Fill data in spans
+  document.getElementById("viewName").textContent = name;
+  document.getElementById("viewDepartment").textContent = department;
+  document.getElementById("viewCourses").textContent = courses;
+  document.getElementById("viewExpertise").textContent = expertise;
+  document.getElementById("viewInterests").textContent = interests;
+  document.getElementById("viewContact").textContent = contact;
+
+  // Show modal
+  viewModal.style.display = "flex";
+
+  // Close button
+  const closeBtn = viewModal.querySelector(".btn-close");
+  closeBtn.onclick = () => {
+    viewModal.style.display = "none";
+  };
+
+  // Close when clicking outside the modal
+  viewModal.onclick = (evt) => {
+    if (evt.target === viewModal) viewModal.style.display = "none";
+  };
+}
+
+
+// close if clicked outside modal content
+window.addEventListener("click", (e) => {
+  if (e.target === viewModal) {
+    viewModal.style.display = "none";
   }
+});
 
 // EDIT ICON
 if (e.target.classList.contains("edit-symbol")) {
