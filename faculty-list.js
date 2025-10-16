@@ -4,7 +4,8 @@ const tableBody = document.querySelector(".faculty-table tbody");
 const searchInputs = document.querySelectorAll(".search-bars input");
 const viewModal = document.getElementById("viewModal");
 const viewForm = document.getElementById("viewForm");
-const closeBtn = viewModal.querySelector(".btn-close");
+const closeBtn = viewModal ? viewModal.querySelector(".btn-close") : null;
+
 
 // Function to fetch faculty data
 async function fetchFaculty() {
