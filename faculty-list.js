@@ -40,7 +40,20 @@ function renderTable(facultyList) {
     return;
   }
 
+  // Detect if user is admin (based on presence of Add Modal)
+  const isAdmin = document.querySelector("#addModal") !== null;
+
   facultyList.forEach(faculty => {
+    const actionIcons = isAdmin
+      ? `
+        <span class="view-symbol">👁️</span>
+        <span class="edit-symbol">✏️</span>
+        <span class="delete-symbol">🗑️</span>
+      `
+      : `
+        <span class="view-symbol">👁️</span>
+      `;
+
     const row = `
       <tr 
         data-id="${faculty.id}" 
@@ -57,16 +70,13 @@ function renderTable(facultyList) {
         <td>${faculty.expertise}</td>
         <td>${faculty.interests}</td>
         <td>${faculty.contact}</td>
-        <td>
-          <span class="view-symbol">👁️</span>
-          <span class="edit-symbol">✏️</span>
-          <span class="delete-symbol">🗑️</span>
-        </td>
+        <td>${actionIcons}</td>
       </tr>
     `;
     tableBody.insertAdjacentHTML("beforeend", row);
   });
 }
+
 
 
 // Event listeners for search inputs
