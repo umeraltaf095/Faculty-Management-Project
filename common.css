@@ -1,0 +1,79 @@
+/* common.css */
+
+/* General Layout */
+body {
+  margin: 0;
+  padding-bottom: 70px; /* leave space equal to footer height */
+  box-sizing: border-box;
+}
+
+
+.container {
+  width: 90%;
+  margin: 0 auto;
+}
+
+/* Header */
+.main-header {
+  background: linear-gradient(135deg, #004aad, #0077ff);
+  color: white;
+  padding: 10px 0;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.site-title {
+  font-size: 1.6rem;
+  font-weight: 600;
+}
+
+.nav-links a {
+  color: white;
+  text-decoration: none;
+  margin-left: 15px;
+  font-weight: 500;
+  transition: 0.3s;
+}
+
+.nav-links a:hover {
+  text-decoration: underline;
+  color: #ffdd57;
+}
+
+/* Footer */
+
+
+
+.footer-content p {
+  margin: 1px 0;
+}
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex: 1;
+}
+
+.main-footer {
+  background: #002b5b;
+  color: white;
+  text-align: center;
+  padding: 09px 0;
+  font-size: 0.9rem;
+  width: 100%;
+}

@@ -4,9 +4,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Faculty List</title>
+    <link rel="stylesheet" href="common.css">
+
     <link rel="stylesheet" href="admin-dashboard.css" />
   </head>
   <body>
+      <div id="header"></div>
     <div class="faculty-container">
       <h2>Faculty Details</h2>
 
@@ -215,6 +218,18 @@
     </div>
   </div>
 </div>
+  <div id="footer"></div>
+   <script>
+    // Load header and footer dynamically
+    async function includeHTML(id, file) {
+      const res = await fetch(file);
+      const html = await res.text();
+      document.getElementById(id).innerHTML = html;
+    }
+
+    includeHTML("header", "header.html");
+    includeHTML("footer", "footer.html");
+  </script>
 
 
 
