@@ -15,44 +15,50 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
  
-  modalForm.addEventListener("submit", async (e) => {
-    e.preventDefault();
+ modalForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
 
-    
-    const facultyData = {
-      name: modalForm.querySelector("input[name='name']").value,
-      department: modalForm.querySelector("input[name='department']").value,
-      courses_taught: modalForm.querySelector("input[name='courses_taught']")
-        .value,
-      expertise: modalForm.querySelector("input[name='expertise']").value,
-      interests: modalForm.querySelector("input[name='interests']").value,
-      contact: modalForm.querySelector("input[name='contact']").value,
-    };
+  const facultyData = {
+    name: modalForm.querySelector("input[name='name']").value,
+    department: modalForm.querySelector("input[name='department']").value,
+    courses_taught: modalForm.querySelector("input[name='courses_taught']").value,
+    expertise: modalForm.querySelector("input[name='expertise']").value,
+    interests: modalForm.querySelector("input[name='interests']").value,
+    contact: modalForm.querySelector("input[name='contact']").value,
+  };
 
-    try {
-      const response = await fetch("http://localhost/my-api/faculty.php", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(facultyData),
-      });
+  try {
+    const response = await fetch("http://localhost/my-api/faculty.php", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(facultyData),
+    });
 
-      if (response.ok) {
-        alert("Faculty added successfully!");
-        modal.style.display = "none";
-        modalForm.reset();
-        if (typeof fetchFaculty === "function") {
-          fetchFaculty();
-        }
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => null);
+
+      if (errorData && errorData.error) {
+        alert(errorData.error); // *** shows "Email already exists" or "Contact already exists"
       } else {
-        const errorText = await response.text();
-        console.error("Server Response:", errorText);
-        alert("Failed to add faculty: " + errorText);
+        alert("Failed to add faculty. Please try again.");
       }
-    } catch (error) {
-      console.error("Error:", error);
-      alert("Error connecting to server.");
+      return;
     }
-  });
+
+    alert("Faculty added successfully!");
+    modal.style.display = "none";
+    modalForm.reset();
+
+    if (typeof fetchFaculty === "function") {
+      fetchFaculty();
+    }
+
+  } catch (error) {
+    console.error("Error:", error);
+    alert("Error connecting to server.");
+  }
+});
+
 });

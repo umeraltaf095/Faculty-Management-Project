@@ -1,90 +1,115 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Faculty List</title>
-  <link rel="stylesheet" href="faculty-list.css">
-   <link rel="stylesheet" href="admin-dashboard.css" />
+
+  <!-- Common styles for header & footer -->
+  <link rel="stylesheet" href="common.css" />
+
+  <!-- Page-specific styles -->
+  <link rel="stylesheet" href="faculty-list.css" />
+  <link rel="stylesheet" href="admin-dashboard.css" />
 </head>
 <body>
-  <div class="faculty-container">
-    <h2>Faculty Details</h2>
+  <!-- Header (loaded dynamically) -->
+  <div id="header"></div>
 
-    
-    <div class="search-section">
-      <div class="search-labels">
-        <span>Name</span>
-        <span>Department</span>
-        <span>Course Taught</span>
-        <span>Area of Expertise</span>
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="faculty-container">
+      <h2>Faculty Details</h2>
+
+      <div class="search-section">
+        <div class="search-labels">
+          <span>Name</span>
+          <span>Department</span>
+          <span>Course Taught</span>
+          <span>Area of Expertise</span>
+        </div>
+        <div class="search-bars">
+          <input type="text" placeholder="Search by name" />
+          <input type="text" placeholder="Search by department" />
+          <input type="text" placeholder="Search by course" />
+          <input type="text" placeholder="Search by expertise" />
+        </div>
       </div>
-      <div class="search-bars">
-        <input type="text" placeholder="Search by name">
-        <input type="text" placeholder="Search by department">
-        <input type="text" placeholder="Search by course">
-        <input type="text" placeholder="Search by expertise">
-      </div>
+
+      <!-- Table -->
+      <table class="faculty-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Department</th>
+            <th>Courses Taught</th>
+            <th>Expertise</th>
+            <th>Interests</th>
+            <th>Email</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Faculty data will be rendered dynamically -->
+        </tbody>
+      </table>
     </div>
+  </main>
 
-  
-    <table class="faculty-table">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Department</th>
-          <th>Courses Taught</th>
-          <th>Expertise</th>
-          <th>Interests</th>
-          <th>Email</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-     <tbody>
-  <!-- Faculty data will be rendered dynamically -->
-</tbody>
-
-    </table>
-
-    
-  </div>
   <!-- View Faculty Modal -->
-<div class="modal" id="viewModal">
-  <div class="modal-content">
-    <h3>View Faculty Details</h3>
+  <div class="modal" id="viewModal">
+    <div class="modal-content">
+      <h3>View Faculty Details</h3>
 
-    <div class="view-details">
-      <div class="view-row">
-        <span class="view-label">Name:</span>
-        <span class="view-value" id="viewName">Dr. Example Name</span>
+      <div class="view-details">
+        <div class="view-row">
+          <span class="view-label">Name:</span>
+          <span class="view-value" id="viewName">Dr. Example Name</span>
+        </div>
+        <div class="view-row">
+          <span class="view-label">Department:</span>
+          <span class="view-value" id="viewDepartment">Computer Science</span>
+        </div>
+        <div class="view-row">
+          <span class="view-label">Courses Taught:</span>
+          <span class="view-value" id="viewCourses">Database Systems, Web Development</span>
+        </div>
+        <div class="view-row">
+          <span class="view-label">Expertise:</span>
+          <span class="view-value" id="viewExpertise">APIs, Databases</span>
+        </div>
+        <div class="view-row">
+          <span class="view-label">Interests:</span>
+          <span class="view-value" id="viewInterests">Research, Teaching</span>
+        </div>
+        <div class="view-row">
+          <span class="view-label">Contact:</span>
+          <span class="view-value" id="viewContact">email@example.com</span>
+        </div>
       </div>
-      <div class="view-row">
-        <span class="view-label">Department:</span>
-        <span class="view-value" id="viewDepartment">Computer Science</span>
-      </div>
-      <div class="view-row">
-        <span class="view-label">Courses Taught:</span>
-        <span class="view-value" id="viewCourses">Database Systems, Web Development</span>
-      </div>
-      <div class="view-row">
-        <span class="view-label">Expertise:</span>
-        <span class="view-value" id="viewExpertise">APIs, Databases</span>
-      </div>
-      <div class="view-row">
-        <span class="view-label">Interests:</span>
-        <span class="view-value" id="viewInterests">Research, Teaching</span>
-      </div>
-      <div class="view-row">
-        <span class="view-label">Contact:</span>
-        <span class="view-value" id="viewContact">email@example.com</span>
-      </div>
-    </div>
 
-    <div class="modal-buttons">
-      <button type="button" class="btn-close btn-cancel">Close</button>
+      <div class="modal-buttons">
+        <button type="button" class="btn-close btn-cancel">Close</button>
+      </div>
     </div>
   </div>
-</div>
+
+  <!-- Footer (loaded dynamically) -->
+  <div id="footer"></div>
+
+  <!-- Script to load header & footer -->
+  <script>
+    async function includeHTML(id, file) {
+      const res = await fetch(file);
+      const html = await res.text();
+      document.getElementById(id).innerHTML = html;
+    }
+
+    includeHTML("header", "header.html");
+    includeHTML("footer", "footer.html");
+  </script>
+
+  <!-- Scripts -->
   <script src="faculty-list.js"></script>
 </body>
 </html>
