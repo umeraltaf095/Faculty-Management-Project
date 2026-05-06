@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Edit Faculty</title>
+    <link rel="stylesheet" href="common.css" />
+    <link rel="stylesheet" href="admin-dashboard.css" />
+    <style>
+      .add-faculty-form-container {
+        background: white;
+        padding: 30px;
+        border-radius: 8px;
+        max-width: 600px;
+        margin: 40px auto;
+        box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      }
+      .add-faculty-form-container h2 {
+        text-align: center;
+        margin-bottom: 25px;
+        font-size: 24px;
+        color: #333;
+      }
+      #editFacultyForm {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+      }
+      .form-group {
+        margin-bottom: 0;
+      }
+      .form-group label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 5px;
+        color: #555;
+      }
+      .form-group input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        font-size: 14px;
+        box-sizing: border-box;
+      }
+      .form-actions {
+        grid-column: span 2;
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+      }
+      .btn-cancel, .btn-submit {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background 0.3s;
+      }
+      .btn-cancel {
+        background: #e74c3c;
+        color: white;
+      }
+      .btn-cancel:hover {
+        background: #c0392b;
+      }
+      .btn-submit {
+        background: #3498db;
+        color: white;
+      }
+      .btn-submit:hover {
+        background: #2c80b4;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- Header (loaded dynamically) -->
+    <div id="header"></div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <div class="add-faculty-form-container">
+        <h2>Edit Faculty</h2>
+        <form id="editFacultyForm">
+          <input type="hidden" name="id" />
+          <div class="form-group">
+            <label>Name</label>
+            <input type="text" name="name" placeholder="Enter name" required />
+          </div>
+          <div class="form-group">
+            <label>Department</label>
+            <input type="text" name="department" placeholder="Enter department" required />
+          </div>
+          <div class="form-group">
+            <label>Courses Taught</label>
+            <input type="text" name="courses_taught" placeholder="Enter courses taught" required />
+          </div>
+          <div class="form-group">
+            <label>Area of Expertise</label>
+            <input type="text" name="expertise" placeholder="Enter expertise" required />
+          </div>
+          <div class="form-group">
+            <label>Interests</label>
+            <input type="text" name="interests" placeholder="Enter interests" required />
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" name="contact" placeholder="Enter email" required />
+          </div>
+
+          <div class="form-actions">
+            <button type="button" class="btn-cancel" onclick="window.location.href='admin-dashboard.html'">Cancel</button>
+            <button type="submit" class="btn-submit">Save Changes</button>
+          </div>
+        </form>
+      </div>
+    </main>
+
+    <!-- Footer (loaded dynamically) -->
+    <div id="footer"></div>
+
+    <!-- Load header & footer dynamically -->
+    <script>
+      async function includeHTML(id, file) {
+        const res = await fetch(file);
+        const html = await res.text();
+        document.getElementById(id).innerHTML = html;
+      }
+
+      async function initLayout() {
+        await includeHTML("header", "header.html");
+        await includeHTML("footer", "footer.html");
+
+        // Init Sidebar Toggle
+        const toggleBtn = document.getElementById("sidebarToggle");
+        const sidebar = document.getElementById("sidebar");
+        if (toggleBtn && sidebar) {
+            toggleBtn.addEventListener("click", () => {
+                sidebar.classList.toggle("sidebar-closed");
+                document.body.classList.toggle("sidebar-closed");
+            });
+        }
+
+        // Highlight active page (highlight Admin Dashboard since this is part of it)
+        const navLinks = document.querySelectorAll('.sidebar-nav a');
+        navLinks.forEach(link => {
+            if(link.getAttribute('href') === 'admin-dashboard.html') {
+                link.classList.add('active-page');
+            }
+        });
+      }
+
+      initLayout();
+    </script>
+    <script src="edit-faculty.js"></script>
+  </body>
+</html>

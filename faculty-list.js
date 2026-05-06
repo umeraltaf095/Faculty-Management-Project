@@ -40,8 +40,8 @@ function renderTable(facultyList) {
     return;
   }
 
-  // Detect if user is admin (based on presence of Add Modal)
-  const isAdmin = document.querySelector("#addModal") !== null;
+  // Detect if user is admin (based on presence of Add Button)
+  const isAdmin = document.querySelector(".btn-add") !== null;
 
   facultyList.forEach(faculty => {
     const actionIcons = isAdmin
@@ -90,123 +90,42 @@ fetchFaculty();
 // Global click event listener for all symbols
 document.addEventListener("click", function (e) {
   // VIEW ICON
-// VIEW ICON — open read-only modal and show details
-if (e.target.classList.contains("view-symbol")) {
-  const row = e.target.closest("tr");
+  if (e.target.classList.contains("view-symbol")) {
+    const row = e.target.closest("tr");
 
-  // Get data from attributes (or show sample text)
-  const name = row?.dataset?.name ?? "Dr. Example Name";
-  const department = row?.dataset?.department ?? "Computer Science";
-  const courses = row?.dataset?.courses ?? "Database Systems, Web Development";
-  const expertise = row?.dataset?.expertise ?? "APIs, Databases";
-  const interests = row?.dataset?.interests ?? "Research, Teaching";
-  const contact = row?.dataset?.contact ?? "email@example.com";
+    // Get data from attributes (or show sample text)
+    const facultyData = {
+      name: row?.dataset?.name ?? "Dr. Example Name",
+      department: row?.dataset?.department ?? "Computer Science",
+      courses: row?.dataset?.courses ?? "Database Systems, Web Development",
+      expertise: row?.dataset?.expertise ?? "APIs, Databases",
+      interests: row?.dataset?.interests ?? "Research, Teaching",
+      contact: row?.dataset?.contact ?? "email@example.com"
+    };
 
-  // Get modal elements
-  const viewModal = document.getElementById("viewModal");
-
-  // Fill data in spans
-  document.getElementById("viewName").textContent = name;
-  document.getElementById("viewDepartment").textContent = department;
-  document.getElementById("viewCourses").textContent = courses;
-  document.getElementById("viewExpertise").textContent = expertise;
-  document.getElementById("viewInterests").textContent = interests;
-  document.getElementById("viewContact").textContent = contact;
-
-  // Show modal
-  viewModal.style.display = "flex";
-
-  // Close button
-  const closeBtn = viewModal.querySelector(".btn-close");
-  closeBtn.onclick = () => {
-    viewModal.style.display = "none";
-  };
-
-  // Close when clicking outside the modal
-  viewModal.onclick = (evt) => {
-    if (evt.target === viewModal) viewModal.style.display = "none";
-  };
-}
-
-
-// close if clicked outside modal content
-window.addEventListener("click", (e) => {
-  if (e.target === viewModal) {
-    viewModal.style.display = "none";
+    // Store data in sessionStorage and redirect
+    sessionStorage.setItem("viewFaculty", JSON.stringify(facultyData));
+    window.location.href = "view-faculty.html";
   }
-});
 
 // EDIT ICON
 if (e.target.classList.contains("edit-symbol")) {
   const row = e.target.closest("tr");
 
   // Get data from attributes
-  const id = row.dataset.id;
-  const name = row.dataset.name;
-  const department = row.dataset.department;
-  const courses = row.dataset.courses;
-  const expertise = row.dataset.expertise;
-  const interests = row.dataset.interests;
-  const contact = row.dataset.contact;
-
-  // Open modal and fill form
-  const editModal = document.getElementById("editModal");
-  const form = editModal.querySelector(".modal-form");
-
-  editModal.style.display = "flex";
-
-  // Fill form fields
-  form.querySelector('input[name="name"]').value = name;
-  form.querySelector('input[name="department"]').value = department;
-  form.querySelector('input[name="courses_taught"]').value = courses;
-  form.querySelector('input[name="expertise"]').value = expertise;
-  form.querySelector('input[name="interests"]').value = interests;
-  form.querySelector('input[name="contact"]').value = contact;
-
-  // Store faculty ID in form
-  form.dataset.id = id;
-
-  // Close modal when Cancel clicked
-  const cancelBtn = editModal.querySelector(".btn-cancel");
-  cancelBtn.onclick = () => {
-    editModal.style.display = "none";
+  const facultyData = {
+    id: row.dataset.id,
+    name: row.dataset.name,
+    department: row.dataset.department,
+    courses: row.dataset.courses,
+    expertise: row.dataset.expertise,
+    interests: row.dataset.interests,
+    contact: row.dataset.contact
   };
 
-  // Handle UPDATE (PUT request)
-  const saveBtn = editModal.querySelector(".btn-add-modal");
-  saveBtn.onclick = async (event) => {
-    event.preventDefault();
-
-    const updatedData = {
-      name: form.querySelector('input[name="name"]').value.trim(),
-      department: form.querySelector('input[name="department"]').value.trim(),
-      courses_taught: form.querySelector('input[name="courses_taught"]').value.trim(),
-      expertise: form.querySelector('input[name="expertise"]').value.trim(),
-      interests: form.querySelector('input[name="interests"]').value.trim(),
-      contact: form.querySelector('input[name="contact"]').value.trim(),
-    };
-
-    try {
-      const response = await fetch(`http://localhost/my-api/faculty.php?id=${id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(updatedData),
-      });
-
-      if (response.ok) {
-        alert("Faculty updated successfully!");
-        editModal.style.display = "none";
-        fetchFaculty(); // refresh table to show updated data
-      } else {
-        alert("Failed to update faculty. Please try again.");
-      }
-    } catch (error) {
-      console.error("Error updating faculty:", error);
-      alert("An error occurred while updating the record.");
-    }
-  };
+  // Store data in sessionStorage and redirect
+  sessionStorage.setItem("editFaculty", JSON.stringify(facultyData));
+  window.location.href = "edit-faculty.html";
 }
 
 
@@ -214,7 +133,7 @@ if (e.target.classList.contains("edit-symbol")) {
 
  // DELETE ICON
 if (e.target.classList.contains("delete-symbol")) {
-  const isAdmin = document.querySelector("#addModal") !== null;
+  const isAdmin = document.querySelector(".btn-add") !== null;
 
   if (isAdmin) {
     const row = e.target.closest("tr");

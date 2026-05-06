@@ -33,7 +33,7 @@
           </div>
 
           <div class="add-btn-container">
-            <button class="btn-add">Add</button>
+            <button class="btn-add" onclick="window.location.href='add-faculty.html'">Add</button>
           </div>
         </div>
 
@@ -83,25 +83,7 @@
       </div>
     </main>
 
-    <!-- Add Faculty Modal -->
-    <div class="modal" id="addModal">
-      <div class="modal-content">
-        <h3>Add Faculty</h3>
-        <form class="modal-form">
-          <input type="text" name="name" placeholder="Enter name" required />
-          <input type="text" name="department" placeholder="Enter department" required />
-          <input type="text" name="courses_taught" placeholder="Enter courses taught" required />
-          <input type="text" name="expertise" placeholder="Enter expertise" required />
-          <input type="text" name="interests" placeholder="Enter interests" required />
-          <input type="email" name="contact" placeholder="Enter email" required />
 
-          <div class="modal-buttons">
-            <button type="button" class="btn-cancel">Cancel</button>
-            <button type="submit" class="btn-add-modal">Add</button>
-          </div>
-        </form>
-      </div>
-    </div>
 
     <!-- Delete Confirmation Modal -->
     <div class="delete-modal" id="deleteModal">
@@ -115,64 +97,9 @@
       </div>
     </div>
 
-    <!-- Edit Faculty Modal -->
-    <div class="modal" id="editModal">
-      <div class="modal-content">
-        <h3>Edit Faculty</h3>
-        <form class="modal-form" id="editForm">
-          <input type="hidden" name="id" />
-          <input type="text" name="name" placeholder="Enter name" required />
-          <input type="text" name="department" placeholder="Enter department" required />
-          <input type="text" name="courses_taught" placeholder="Enter courses taught" required />
-          <input type="text" name="expertise" placeholder="Enter expertise" required />
-          <input type="text" name="interests" placeholder="Enter interests" />
-          <input type="email" name="contact" placeholder="Enter email" required />
 
-          <div class="modal-buttons">
-            <button type="button" class="btn-cancel">Cancel</button>
-            <button type="submit" class="btn-add-modal">Save Changes</button>
-          </div>
-        </form>
-      </div>
-    </div>
 
-    <!-- View Faculty Modal -->
-    <div class="modal" id="viewModal">
-      <div class="modal-content">
-        <h3>View Faculty Details</h3>
 
-        <div class="view-details">
-          <div class="view-row">
-            <span class="view-label">Name:</span>
-            <span class="view-value" id="viewName">Dr. Example Name</span>
-          </div>
-          <div class="view-row">
-            <span class="view-label">Department:</span>
-            <span class="view-value" id="viewDepartment">Computer Science</span>
-          </div>
-          <div class="view-row">
-            <span class="view-label">Courses Taught:</span>
-            <span class="view-value" id="viewCourses">Database Systems, Web Development</span>
-          </div>
-          <div class="view-row">
-            <span class="view-label">Expertise:</span>
-            <span class="view-value" id="viewExpertise">APIs, Databases</span>
-          </div>
-          <div class="view-row">
-            <span class="view-label">Interests:</span>
-            <span class="view-value" id="viewInterests">Research, Teaching</span>
-          </div>
-          <div class="view-row">
-            <span class="view-label">Contact:</span>
-            <span class="view-value" id="viewContact">email@example.com</span>
-          </div>
-        </div>
-
-        <div class="modal-buttons">
-          <button type="button" class="btn-close btn-cancel">Close</button>
-        </div>
-      </div>
-    </div>
 
     <!-- Footer (loaded dynamically) -->
     <div id="footer"></div>
@@ -185,8 +112,34 @@
         document.getElementById(id).innerHTML = html;
       }
 
-      includeHTML("header", "header.html");
-      includeHTML("footer", "footer.html");
+      async function initLayout() {
+        await includeHTML("header", "header.html");
+        await includeHTML("footer", "footer.html");
+
+        // Init Sidebar Toggle
+        const toggleBtn = document.getElementById("sidebarToggle");
+        const sidebar = document.getElementById("sidebar");
+        if (toggleBtn && sidebar) {
+            toggleBtn.addEventListener("click", () => {
+                sidebar.classList.toggle("sidebar-closed");
+                document.body.classList.toggle("sidebar-closed");
+            });
+        }
+
+        // Highlight active page
+        const navLinks = document.querySelectorAll('.sidebar-nav a');
+        const currentPath = window.location.pathname;
+        let currentFile = currentPath.split('/').pop();
+        if (!currentFile) currentFile = 'index.html';
+
+        navLinks.forEach(link => {
+            if(link.getAttribute('href') === currentFile) {
+                link.classList.add('active-page');
+            }
+        });
+      }
+
+      initLayout();
     </script>
 
     <script src="faculty-list.js"></script>

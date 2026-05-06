@@ -1,7 +1,22 @@
 <!-- header.html -->
 <header class="main-header">
   <div class="container header-content">
-    <h1 class="site-title">Online Faculty and Staff Directory System</h1>
+    <div class="header-left">
+      <h1 class="site-title">Online Faculty and Staff Directory System</h1>
+    </div>
     <button class="logout-btn" onclick="window.location.href='index.html'">Logout</button>
   </div>
 </header>
+
+<!-- Sidebar -->
+<aside id="sidebar" class="sidebar">
+  <div class="sidebar-header">
+    <h2>Directory System</h2>
+    <button id="sidebarToggle" class="hamburger-btn">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <ul class="sidebar-nav">
+    <li><a href="admin-dashboard.html" class="nav-link">Admin Dashboard</a></li>
+  </ul>
+</aside>
