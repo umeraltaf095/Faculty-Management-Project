@@ -65,18 +65,24 @@ function renderTable() {
         <span class="view-symbol">👁️</span>
       `;
 
+    const placeholder = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCI+PGNpcmNsZSBjeD0iMjAiIGN5PSIyMCIgcj0iMjAiIGZpbGw9IiNjY2MiLz48L3N2Zz4=';
+    const imageUrl = (faculty.image_url && faculty.image_url !== "null") ? faculty.image_url : placeholder;
+
     const row = `
       <tr 
         data-id="${faculty.id}" 
         data-name="${faculty.name}" 
-        data-department="${faculty.department}" 
+        data-department-id="${faculty.department_id}" 
+        data-department-name="${faculty.department_name}" 
         data-courses="${faculty.courses_taught}" 
         data-expertise="${faculty.expertise}" 
         data-interests="${faculty.interests}" 
         data-contact="${faculty.contact}"
+        data-image="${faculty.image_url}"
       >
+        <td><img src="${imageUrl}" class="faculty-img" alt="" onerror="this.src='${placeholder}'"></td>
         <td>${faculty.name}</td>
-        <td>${faculty.department}</td>
+        <td>${faculty.department_name}</td>
         <td>${faculty.courses_taught}</td>
         <td>${faculty.expertise}</td>
         <td>${faculty.interests}</td>
@@ -175,11 +181,12 @@ document.addEventListener("click", function (e) {
     // Get data from attributes (or show sample text)
     const facultyData = {
       name: row?.dataset?.name ?? "Dr. Example Name",
-      department: row?.dataset?.department ?? "Computer Science",
+      department: row?.dataset?.departmentName ?? "Computer Science",
       courses: row?.dataset?.courses ?? "Database Systems, Web Development",
       expertise: row?.dataset?.expertise ?? "APIs, Databases",
       interests: row?.dataset?.interests ?? "Research, Teaching",
-      contact: row?.dataset?.contact ?? "email@example.com"
+      contact: row?.dataset?.contact ?? "email@example.com",
+      image: row?.dataset?.image
     };
 
     // Store data in sessionStorage and redirect
@@ -195,11 +202,13 @@ document.addEventListener("click", function (e) {
     const facultyData = {
       id: row.dataset.id,
       name: row.dataset.name,
-      department: row.dataset.department,
+      department_id: row.dataset.departmentId,
+      department_name: row.dataset.departmentName,
       courses: row.dataset.courses,
       expertise: row.dataset.expertise,
       interests: row.dataset.interests,
-      contact: row.dataset.contact
+      contact: row.dataset.contact,
+      image: row.dataset.image
     };
 
     // Store data in sessionStorage and redirect

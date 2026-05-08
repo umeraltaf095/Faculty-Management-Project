@@ -241,3 +241,12 @@ body.sidebar-closed {
   cursor: default;
   background: #fdfdfd;
 }
+
+/* Faculty Image Styling */
+.faculty-img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid #ddd;
+}
