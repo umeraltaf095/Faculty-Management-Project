@@ -21,25 +21,56 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 
 require 'db.php';
 
+// Helper function to handle image upload
+function handleImageUpload() {
+    if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
+        $uploadDir = __DIR__ . '/uploads/';
+        
+        // Create uploads directory if it doesn't exist
+        if (!is_dir($uploadDir)) {
+            mkdir($uploadDir, 0777, true);
+        }
+
+        // Generate a unique filename
+        $fileExtension = pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
+        $fileName = uniqid('faculty_') . '.' . $fileExtension;
+        $targetFile = $uploadDir . $fileName;
+
+        if (move_uploaded_file($_FILES['image']['tmp_name'], $targetFile)) {
+            // Adjust this to match your actual domain/localhost path structure
+            $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http";
+            $domain = $_SERVER['HTTP_HOST'];
+            $baseDir = dirname($_SERVER['SCRIPT_NAME']);
+            $baseDir = $baseDir === '/' ? '' : $baseDir;
+            
+            return $protocol . "://" . $domain . $baseDir . "/uploads/" . $fileName;
+        }
+    }
+    return null;
+}
+
+// Detect true method (FormData updates are sent via POST with _method=PUT)
 $method = $_SERVER['REQUEST_METHOD'];
-$input  = json_decode(file_get_contents('php://input'), true);
+if ($method === 'POST' && isset($_POST['_method']) && strtoupper($_POST['_method']) === 'PUT') {
+    $method = 'PUT';
+}
 
 try {
 
     /* -----------------------------------
        POST → ADD NEW FACULTY
-       Body: { name, department_id, courses_taught, expertise, interests, contact, image_url }
-       Note: image_url should be a fully-qualified URL to the image (only the link is stored in DB)
     ----------------------------------- */
     if ($method === 'POST') {
 
-        $name          = trim($input['name'] ?? '');
-        $department_id = isset($input['department_id']) ? intval($input['department_id']) : null;
-        $courses       = trim($input['courses_taught'] ?? '');
-        $expertise     = trim($input['expertise'] ?? '');
-        $interests     = trim($input['interests'] ?? '');
-        $contact       = trim($input['contact'] ?? '');
-        $image_url     = trim($input['image_url'] ?? '');
+        $name          = trim($_POST['name'] ?? '');
+        $department_id = isset($_POST['department_id']) ? intval($_POST['department_id']) : null;
+        $courses       = trim($_POST['courses_taught'] ?? '');
+        $expertise     = trim($_POST['expertise'] ?? '');
+        $interests     = trim($_POST['interests'] ?? '');
+        $contact       = trim($_POST['contact'] ?? '');
+        
+        // Handle file upload
+        $image_url = handleImageUpload();
 
         if ($name === '' || !$department_id || $courses === '') {
             http_response_code(400);
@@ -47,14 +78,6 @@ try {
             exit;
         }
 
-        // Validate image_url format (must be a valid URL if provided)
-        if ($image_url !== '' && !filter_var($image_url, FILTER_VALIDATE_URL)) {
-            http_response_code(400);
-            echo json_encode(['error' => 'image_url must be a valid URL (e.g. https://example.com/photo.jpg)']);
-            exit;
-        }
-
-        // Validate department exists
         $deptCheck = $pdo->prepare("SELECT id FROM departments WHERE id = ?");
         $deptCheck->execute([$department_id]);
         if ($deptCheck->rowCount() === 0) {
@@ -63,7 +86,6 @@ try {
             exit;
         }
 
-        // Check duplicate contact
         if ($contact !== '') {
             $check = $pdo->prepare("SELECT id FROM faculty WHERE contact = ?");
             $check->execute([$contact]);
@@ -78,7 +100,7 @@ try {
             INSERT INTO faculty (name, department_id, courses_taught, expertise, interests, contact, image_url)
             VALUES (?, ?, ?, ?, ?, ?, ?)
         ");
-        $stmt->execute([$name, $department_id, $courses, $expertise ?: null, $interests ?: null, $contact ?: null, $image_url ?: null]);
+        $stmt->execute([$name, $department_id, $courses, $expertise ?: null, $interests ?: null, $contact ?: null, $image_url]);
 
         http_response_code(201);
         echo json_encode([
@@ -89,13 +111,9 @@ try {
     }
 
     /* -----------------------------------
-       GET → FETCH FACULTY (with department name via JOIN)
-       Filters: ?name=&department_id=&courses_taught=&expertise=
-       Single:  ?id=5
-       Returns image_url in each record
+       GET → FETCH FACULTY
     ----------------------------------- */
     elseif ($method === 'GET') {
-
         $conditions = [];
         $params     = [];
 
@@ -148,7 +166,6 @@ try {
         $stmt->execute($params);
         $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        // Cast numeric fields
         $rows = array_map(function ($row) {
             $row['id']            = (int) $row['id'];
             $row['department_id'] = (int) $row['department_id'];
@@ -160,10 +177,7 @@ try {
     }
 
     /* -----------------------------------
-       PUT → UPDATE FACULTY
-       URL:  PUT /faculty.php?id=5
-       Body: { name, department_id, courses_taught, expertise, interests, contact, image_url }
-       Note: image_url should be a fully-qualified URL to the image (only the link is stored in DB)
+       PUT → UPDATE FACULTY (Sent via POST with _method=PUT)
     ----------------------------------- */
     elseif ($method === 'PUT') {
 
@@ -174,13 +188,12 @@ try {
         }
 
         $id            = intval($_GET['id']);
-        $name          = trim($input['name'] ?? '');
-        $department_id = isset($input['department_id']) ? intval($input['department_id']) : null;
-        $courses       = trim($input['courses_taught'] ?? '');
-        $expertise     = trim($input['expertise'] ?? '');
-        $interests     = trim($input['interests'] ?? '');
-        $contact       = trim($input['contact'] ?? '');
-        $image_url     = trim($input['image_url'] ?? '');
+        $name          = trim($_POST['name'] ?? '');
+        $department_id = isset($_POST['department_id']) ? intval($_POST['department_id']) : null;
+        $courses       = trim($_POST['courses_taught'] ?? '');
+        $expertise     = trim($_POST['expertise'] ?? '');
+        $interests     = trim($_POST['interests'] ?? '');
+        $contact       = trim($_POST['contact'] ?? '');
 
         if ($name === '' || !$department_id || $courses === '') {
             http_response_code(400);
@@ -188,23 +201,16 @@ try {
             exit;
         }
 
-        // Validate image_url format (must be a valid URL if provided)
-        if ($image_url !== '' && !filter_var($image_url, FILTER_VALIDATE_URL)) {
-            http_response_code(400);
-            echo json_encode(['error' => 'image_url must be a valid URL (e.g. https://example.com/photo.jpg)']);
-            exit;
-        }
-
-        // Ensure faculty exists
-        $exist = $pdo->prepare("SELECT id FROM faculty WHERE id = ?");
+        $exist = $pdo->prepare("SELECT id, image_url FROM faculty WHERE id = ?");
         $exist->execute([$id]);
         if ($exist->rowCount() === 0) {
             http_response_code(404);
             echo json_encode(['error' => 'Faculty not found']);
             exit;
         }
+        
+        $currentRecord = $exist->fetch(PDO::FETCH_ASSOC);
 
-        // Validate department exists
         $deptCheck = $pdo->prepare("SELECT id FROM departments WHERE id = ?");
         $deptCheck->execute([$department_id]);
         if ($deptCheck->rowCount() === 0) {
@@ -213,7 +219,6 @@ try {
             exit;
         }
 
-        // Check duplicate contact (excluding current record)
         if ($contact !== '') {
             $check = $pdo->prepare("SELECT id FROM faculty WHERE contact = ? AND id != ?");
             $check->execute([$contact, $id]);
@@ -224,12 +229,18 @@ try {
             }
         }
 
+        // Handle file upload if a new image was provided
+        $new_image_url = handleImageUpload();
+        
+        // If no new image was uploaded, retain the existing one
+        $image_url_to_save = $new_image_url ? $new_image_url : $currentRecord['image_url'];
+
         $stmt = $pdo->prepare("
             UPDATE faculty
             SET name = ?, department_id = ?, courses_taught = ?, expertise = ?, interests = ?, contact = ?, image_url = ?
             WHERE id = ?
         ");
-        $stmt->execute([$name, $department_id, $courses, $expertise ?: null, $interests ?: null, $contact ?: null, $image_url ?: null, $id]);
+        $stmt->execute([$name, $department_id, $courses, $expertise ?: null, $interests ?: null, $contact ?: null, $image_url_to_save, $id]);
 
         http_response_code(200);
         echo json_encode(['message' => 'Faculty updated successfully']);
@@ -238,7 +249,6 @@ try {
 
     /* -----------------------------------
        DELETE → DELETE FACULTY
-       URL: DELETE /faculty.php?id=5
     ----------------------------------- */
     elseif ($method === 'DELETE') {
 
