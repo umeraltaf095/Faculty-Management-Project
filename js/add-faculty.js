@@ -29,26 +29,14 @@ document.addEventListener("DOMContentLoaded", async () => {
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
 
-      const facultyData = {
-        name: form.querySelector("input[name='name']").value,
-        department_id: form.querySelector("select[name='department_id']").value,
-        courses_taught: form.querySelector("input[name='courses_taught']").value,
-        expertise: form.querySelector("input[name='expertise']").value,
-        interests: form.querySelector("input[name='interests']").value,
-        contact: form.querySelector("input[name='contact']").value,
-      };
+      const formData = new FormData(form);
 
-      const imageFile = form.querySelector("input[name='image']").files[0];
-
-      // Function to send data as JSON
+      // Function to send data
       const sendData = async (data) => {
         try {
           const response = await fetch("http://localhost/my-api/faculty.php", {
             method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data),
+            body: data, // fetch automatically sets Content-Type to multipart/form-data with boundary
           });
 
           if (!response.ok) {
@@ -70,20 +58,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
       };
 
-      // Handle image if present
-      if (imageFile) {
-        const reader = new FileReader();
-        reader.onload = () => {
-          facultyData.image = reader.result; // Send as Base64 string
-          sendData(facultyData);
-        };
-        reader.onerror = () => {
-          alert("Error reading image file.");
-        };
-        reader.readAsDataURL(imageFile);
-      } else {
-        sendData(facultyData);
-      }
+      sendData(formData);
     });
   }
 });

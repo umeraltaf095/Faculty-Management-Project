@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Department List</title>
+
+  <!-- Common styles for header & footer -->
+  <link rel="stylesheet" href="../css/common.css" />
+
+  <!-- Page-specific styles -->
+  <link rel="stylesheet" href="../css/faculty-list.css" />
+  <link rel="stylesheet" href="../css/admin-dashboard.css" />
+</head>
+<body>
+  <!-- Header (loaded dynamically) -->
+  <div id="header"></div>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="faculty-container">
+      <h2>Department Details</h2>
+
+      <div class="search-section">
+        <div class="search-labels">
+          <span>Department</span>
+        </div>
+        <div class="search-bars">
+          <input type="text" placeholder="Search by department" id="searchDepartment" />
+        </div>
+      </div>
+
+      <!-- Table -->
+      <table class="faculty-table" id="departmentTable">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Department</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Department data will be rendered dynamically -->
+        </tbody>
+      </table>
+      <div id="paginationContainer" class="pagination"></div>
+    </div>
+  </main>
+
+
+
+  <!-- Footer (loaded dynamically) -->
+  <div id="footer"></div>
+
+  <!-- Script to load header & footer -->
+  <script>
+    async function includeHTML(id, file) {
+      const res = await fetch(file);
+      const html = await res.text();
+      document.getElementById(id).innerHTML = html;
+    }
+
+    async function initLayout() {
+      await includeHTML("header", "header.html");
+      await includeHTML("footer", "footer.html");
+
+      // Init Sidebar Toggle
+      const toggleBtn = document.getElementById("sidebarToggle");
+      const sidebar = document.getElementById("sidebar");
+      if (toggleBtn && sidebar) {
+          toggleBtn.addEventListener("click", () => {
+              sidebar.classList.toggle("sidebar-closed");
+              document.body.classList.toggle("sidebar-closed");
+          });
+      }
+
+      // Highlight active page
+      const navLinks = document.querySelectorAll('.sidebar-nav a');
+      const currentPath = window.location.pathname;
+      let currentFile = currentPath.split('/').pop();
+      if (!currentFile) currentFile = 'index.html';
+
+      navLinks.forEach(link => {
+          if(link.getAttribute('href') === currentFile || (currentFile === 'admin-department.html' && link.getAttribute('href') === 'department-list.html')) {
+              link.classList.add('active-page');
+          }
+      });
+    }
+
+    initLayout();
+  </script>
+
+  <!-- Scripts -->
+  <script src="../js/department-list.js"></script>
+</body>
+</html>

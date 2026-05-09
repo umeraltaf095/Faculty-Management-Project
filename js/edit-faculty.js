@@ -62,26 +62,15 @@ document.addEventListener("DOMContentLoaded", async () => {
       e.preventDefault();
 
       const id = form.querySelector("input[name='id']").value;
-      const updatedData = {
-        name: form.querySelector("input[name='name']").value.trim(),
-        department_id: form.querySelector("select[name='department_id']").value,
-        courses_taught: form.querySelector("input[name='courses_taught']").value.trim(),
-        expertise: form.querySelector("input[name='expertise']").value.trim(),
-        interests: form.querySelector("input[name='interests']").value.trim(),
-        contact: form.querySelector("input[name='contact']").value.trim(),
-      };
+      const formData = new FormData(form);
+      formData.append('_method', 'PUT'); // Common convention for APIs to detect updates via POST
 
-      const imageFile = form.querySelector("input[name='image']").files[0];
-
-      // Function to send data as JSON
+      // Function to send data
       const sendUpdate = async (data) => {
         try {
           const response = await fetch(`http://localhost/my-api/faculty.php?id=${id}`, {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data),
+            method: "POST", // Use POST so PHP can parse $_FILES properly
+            body: data,
           });
 
           if (response.ok) {
@@ -98,19 +87,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
       };
 
-      if (imageFile) {
-        const reader = new FileReader();
-        reader.onload = () => {
-          updatedData.image = reader.result; // Base64 string
-          sendUpdate(updatedData);
-        };
-        reader.onerror = () => {
-          alert("Error reading image file.");
-        };
-        reader.readAsDataURL(imageFile);
-      } else {
-        sendUpdate(updatedData);
-      }
+      sendUpdate(formData);
     });
   }
 });

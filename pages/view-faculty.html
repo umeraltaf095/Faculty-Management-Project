@@ -3,9 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Edit Faculty</title>
-    <link rel="stylesheet" href="common.css" />
-    <link rel="stylesheet" href="admin-dashboard.css" />
+    <title>View Faculty</title>
+    <link rel="stylesheet" href="../css/common.css" />
+    <link rel="stylesheet" href="../css/admin-dashboard.css" />
     <style>
       .add-faculty-form-container {
         background: white;
@@ -21,7 +21,7 @@
         font-size: 24px;
         color: #333;
       }
-      #editFacultyForm {
+      #viewFacultyForm {
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: 15px;
@@ -35,40 +35,31 @@
         margin-bottom: 5px;
         color: #555;
       }
-      .form-group input, .form-group select {
+      .data-value {
         width: 100%;
-        padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 6px;
-        font-size: 14px;
-        box-sizing: border-box;
+        padding: 10px 0;
+        font-size: 15px;
+        color: #333;
+        border-bottom: 1px solid #eee;
+        word-break: break-word;
       }
       .form-actions {
         grid-column: span 2;
         display: flex;
-        justify-content: space-between;
+        justify-content: center;
         margin-top: 20px;
       }
-      .btn-cancel, .btn-submit {
-        padding: 10px 20px;
+      .btn-cancel {
+        padding: 10px 30px;
         border: none;
         border-radius: 6px;
         cursor: pointer;
         font-size: 16px;
         transition: background 0.3s;
-      }
-      .btn-cancel {
-        background: #e74c3c;
-        color: white;
-      }
-      .btn-cancel:hover {
-        background: #c0392b;
-      }
-      .btn-submit {
         background: #3498db;
         color: white;
       }
-      .btn-submit:hover {
+      .btn-cancel:hover {
         background: #2c80b4;
       }
     </style>
@@ -81,46 +72,40 @@
     <!-- Main Content -->
     <main class="main-content">
       <div class="add-faculty-form-container">
-        <h2>Edit Faculty</h2>
-        <form id="editFacultyForm">
-          <input type="hidden" name="id" />
+        <h2> Faculty Details</h2>
+        <form id="viewFacultyForm">
+          <div class="form-group" style="grid-column: span 2; text-align: center;">
+            <div id="view-image-container" style="margin-bottom: 20px;">
+                <!-- Image will be displayed here -->
+            </div>
+          </div>
           <div class="form-group">
             <label>Name</label>
-            <input type="text" name="name" placeholder="Enter name" required />
+            <div class="data-value" id="view-name"></div>
           </div>
           <div class="form-group">
             <label>Department</label>
-            <select name="department_id" id="departmentSelect" required>
-              <option value="">Select Department</option>
-            </select>
+            <div class="data-value" id="view-department"></div>
           </div>
           <div class="form-group">
             <label>Courses Taught</label>
-            <input type="text" name="courses_taught" placeholder="Enter courses taught" required />
+            <div class="data-value" id="view-courses_taught"></div>
           </div>
           <div class="form-group">
             <label>Area of Expertise</label>
-            <input type="text" name="expertise" placeholder="Enter expertise" required />
+            <div class="data-value" id="view-expertise"></div>
           </div>
           <div class="form-group">
             <label>Interests</label>
-            <input type="text" name="interests" placeholder="Enter interests" required />
+            <div class="data-value" id="view-interests"></div>
           </div>
           <div class="form-group">
             <label>Email</label>
-            <input type="email" name="contact" placeholder="Enter email" required />
-          </div>
-          <div class="form-group">
-            <label>Profile Image</label>
-            <input type="file" name="image" accept="image/*" />
-            <div id="imagePreview" style="margin-top: 10px;">
-              <!-- Current image will be shown here -->
-            </div>
+            <div class="data-value" id="view-contact"></div>
           </div>
 
           <div class="form-actions">
-            <button type="button" class="btn-cancel" onclick="window.location.href='admin-dashboard.html'">Cancel</button>
-            <button type="submit" class="btn-submit">Save Changes</button>
+            <button type="button" class="btn-cancel" onclick="goBack()">Close</button>
           </div>
         </form>
       </div>
@@ -150,18 +135,15 @@
                 document.body.classList.toggle("sidebar-closed");
             });
         }
+      }
 
-        // Highlight active page (highlight Admin Dashboard since this is part of it)
-        const navLinks = document.querySelectorAll('.sidebar-nav a');
-        navLinks.forEach(link => {
-            if(link.getAttribute('href') === 'admin-dashboard.html') {
-                link.classList.add('active-page');
-            }
-        });
+      function goBack() {
+        // Return to the previous page (admin dashboard or faculty list)
+        window.history.back();
       }
 
       initLayout();
     </script>
-    <script src="edit-faculty.js"></script>
+    <script src="../js/view-faculty.js"></script>
   </body>
 </html>

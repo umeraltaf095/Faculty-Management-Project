@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Main Dashboard</title>
+
+    <!-- Common styles for header & footer -->
+    <link rel="stylesheet" href="../css/common.css" />
+    <link rel="stylesheet" href="../css/admin-dashboard.css" />
+    <!-- Page-specific styles -->
+    <link rel="stylesheet" href="../css/main-dashboard.css" />
+    
+    <!-- Google Fonts for Modern Typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <!-- Header (loaded dynamically) -->
+    <div id="header"></div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <div class="dashboard-container">
+        
+        <!-- Welcome Section -->
+        <div class="welcome-section">
+            <h2>Welcome to Faculty Management System</h2>
+            <p>Here is the overview of your organization.</p>
+        </div>
+
+        <!-- Statistics Cards Section -->
+        <div class="stats-grid">
+          <div class="stat-card gradient-primary">
+            <div class="stat-icon">👥</div>
+            <div class="stat-info">
+              <h3>Total Faculty</h3>
+              <p id="totalFaculty" class="stat-number">0</p>
+            </div>
+          </div>
+
+          <div class="stat-card gradient-secondary">
+            <div class="stat-icon">🏢</div>
+            <div class="stat-info">
+              <h3>Total Departments</h3>
+              <p id="totalDepartments" class="stat-number">0</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Activity Section -->
+        <div class="recent-activity-section">
+          <div class="section-header">
+            <h3>Recently Added Faculty</h3>
+            <button class="view-all-btn" onclick="window.location.href='admin-dashboard.html'">View All</button>
+          </div>
+          
+          <div class="recent-list" id="recentFacultyList">
+             <!-- Dynamically populated via JS -->
+             <div class="loading-state">Loading recent activity...</div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+
+    <!-- Footer (loaded dynamically) -->
+    <div id="footer"></div>
+
+    <!-- Script to load header & footer -->
+    <script>
+      async function includeHTML(id, file) {
+        const res = await fetch(file);
+        const html = await res.text();
+        document.getElementById(id).innerHTML = html;
+      }
+
+      async function initLayout() {
+        await includeHTML("header", "header.html");
+        await includeHTML("footer", "footer.html");
+
+        // Init Sidebar Toggle
+        const toggleBtn = document.getElementById("sidebarToggle");
+        const sidebar = document.getElementById("sidebar");
+        if (toggleBtn && sidebar) {
+            toggleBtn.addEventListener("click", () => {
+                sidebar.classList.toggle("sidebar-closed");
+                document.body.classList.toggle("sidebar-closed");
+            });
+        }
+
+        // Highlight active page
+        const navLinks = document.querySelectorAll('.sidebar-nav a');
+        const currentPath = window.location.pathname;
+        let currentFile = currentPath.split('/').pop();
+        if (!currentFile) currentFile = 'index.html';
+
+        navLinks.forEach(link => {
+            if(link.getAttribute('href') === currentFile) {
+                link.classList.add('active-page');
+            }
+        });
+      }
+
+      initLayout();
+    </script>
+
+    <!-- Dashboard Logic -->
+    <script src="../js/main-dashboard.js"></script>
+  </body>
+</html>

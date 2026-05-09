@@ -29,7 +29,7 @@ form.addEventListener("submit", async (event) => {
     // Assuming API returns something like { success: true } if login matches
     if (result.success) {
       alert("Login successful! Redirecting...");
-      window.location.href = "admin-dashboard.html"; // redirect to admin dashboard
+      window.location.href = "pages/main-dashboard.html"; // redirect to main dashboard
     } else {
       alert("Invalid email or password.");
     }

@@ -3,9 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Add Faculty</title>
-    <link rel="stylesheet" href="common.css" />
-    <link rel="stylesheet" href="admin-dashboard.css" />
+    <title>Edit Faculty</title>
+    <link rel="stylesheet" href="../css/common.css" />
+    <link rel="stylesheet" href="../css/admin-dashboard.css" />
     <style>
       .add-faculty-form-container {
         background: white;
@@ -21,7 +21,7 @@
         font-size: 24px;
         color: #333;
       }
-      #addFacultyForm {
+      #editFacultyForm {
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: 15px;
@@ -81,8 +81,9 @@
     <!-- Main Content -->
     <main class="main-content">
       <div class="add-faculty-form-container">
-        <h2>Add New Faculty</h2>
-        <form id="addFacultyForm">
+        <h2>Edit Faculty</h2>
+        <form id="editFacultyForm">
+          <input type="hidden" name="id" />
           <div class="form-group">
             <label>Name</label>
             <input type="text" name="name" placeholder="Enter name" required />
@@ -112,11 +113,14 @@
           <div class="form-group">
             <label>Profile Image</label>
             <input type="file" name="image" accept="image/*" />
+            <div id="imagePreview" style="margin-top: 10px;">
+              <!-- Current image will be shown here -->
+            </div>
           </div>
 
           <div class="form-actions">
             <button type="button" class="btn-cancel" onclick="window.location.href='admin-dashboard.html'">Cancel</button>
-            <button type="submit" class="btn-submit">Add Faculty</button>
+            <button type="submit" class="btn-submit">Save Changes</button>
           </div>
         </form>
       </div>
@@ -158,6 +162,6 @@
 
       initLayout();
     </script>
-    <script src="add-faculty.js"></script>
+    <script src="../js/edit-faculty.js"></script>
   </body>
 </html>

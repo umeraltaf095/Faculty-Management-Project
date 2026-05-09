@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Edit Department</title>
+    <link rel="stylesheet" href="../css/common.css" />
+    <link rel="stylesheet" href="../css/admin-dashboard.css" />
+    <style>
+      .edit-department-form-container {
+        background: white;
+        padding: 30px;
+        border-radius: 8px;
+        max-width: 500px;
+        margin: 40px auto;
+        box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      }
+      .edit-department-form-container h2 {
+        text-align: center;
+        margin-bottom: 25px;
+        font-size: 24px;
+        color: #333;
+      }
+      #editDepartmentForm {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+      }
+      .form-group {
+        margin-bottom: 0;
+      }
+      .form-group label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 5px;
+        color: #555;
+      }
+      .form-group input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        font-size: 14px;
+        box-sizing: border-box;
+      }
+      .form-actions {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+      }
+      .btn-cancel, .btn-submit {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background 0.3s;
+      }
+      .btn-cancel {
+        background: #e74c3c;
+        color: white;
+      }
+      .btn-cancel:hover {
+        background: #c0392b;
+      }
+      .btn-submit {
+        background: #3498db;
+        color: white;
+      }
+      .btn-submit:hover {
+        background: #2c80b4;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- Header (loaded dynamically) -->
+    <div id="header"></div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <div class="edit-department-form-container">
+        <h2>Edit Department</h2>
+        <form id="editDepartmentForm">
+          <input type="hidden" id="departmentId" name="id" />
+          <div class="form-group">
+            <label>Department Name</label>
+            <input type="text" name="department" id="departmentName" placeholder="Enter department name" required />
+          </div>
+
+          <div class="form-actions">
+            <button type="button" class="btn-cancel" onclick="window.location.href='admin-department.html'">Cancel</button>
+            <button type="submit" class="btn-submit">Save Changes</button>
+          </div>
+        </form>
+      </div>
+    </main>
+
+    <!-- Footer (loaded dynamically) -->
+    <div id="footer"></div>
+
+    <!-- Load header & footer dynamically -->
+    <script>
+      async function includeHTML(id, file) {
+        const res = await fetch(file);
+        const html = await res.text();
+        document.getElementById(id).innerHTML = html;
+      }
+
+      async function initLayout() {
+        await includeHTML("header", "header.html");
+        await includeHTML("footer", "footer.html");
+
+        // Init Sidebar Toggle
+        const toggleBtn = document.getElementById("sidebarToggle");
+        const sidebar = document.getElementById("sidebar");
+        if (toggleBtn && sidebar) {
+            toggleBtn.addEventListener("click", () => {
+                sidebar.classList.toggle("sidebar-closed");
+                document.body.classList.toggle("sidebar-closed");
+            });
+        }
+
+        // Highlight active page
+        const navLinks = document.querySelectorAll('.sidebar-nav a');
+        navLinks.forEach(link => {
+            if(link.getAttribute('href') === 'admin-department.html') {
+                link.classList.add('active-page');
+            }
+        });
+      }
+
+      initLayout();
+    </script>
+    <script src="../js/edit-department.js"></script>
+  </body>
+</html>
