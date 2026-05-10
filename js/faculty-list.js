@@ -51,8 +51,9 @@ function renderTable() {
   const endIndex = startIndex + itemsPerPage;
   const pageData = currentFacultyList.slice(startIndex, endIndex);
 
-  // Detect if user is admin (based on presence of Add Button)
-  const isAdmin = document.querySelector(".btn-add") !== null;
+  // Detect if user is admin (based on localStorage)
+  const role = localStorage.getItem('role');
+  const isAdmin = role === 'admin';
 
   pageData.forEach(faculty => {
     const actionIcons = isAdmin
@@ -221,7 +222,7 @@ document.addEventListener("click", function (e) {
 
   // DELETE ICON
   if (e.target.classList.contains("delete-symbol")) {
-    const isAdmin = document.querySelector(".btn-add") !== null;
+    const isAdmin = localStorage.getItem('role') === 'admin';
 
     if (isAdmin) {
       const row = e.target.closest("tr");

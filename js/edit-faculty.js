@@ -1,4 +1,8 @@
 document.addEventListener("DOMContentLoaded", async () => {
+  if (localStorage.getItem('role') !== 'admin') {
+    window.location.href = "faculty-list.html";
+    return;
+  }
   const form = document.getElementById("editFacultyForm");
   const departmentSelect = document.getElementById("departmentSelect");
 
@@ -53,7 +57,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
     } else {
       showToast("No faculty selected for editing.", "error");
-      window.location.href = "admin-dashboard.html";
+            window.location.href = "faculty-list.html";
       return;
     }
 
@@ -76,7 +80,7 @@ document.addEventListener("DOMContentLoaded", async () => {
           if (response.ok) {
             showToast("Faculty updated successfully!", "success");
             sessionStorage.removeItem("editFaculty");
-            window.location.href = "admin-dashboard.html";
+                  window.location.href = "faculty-list.html";
           } else {
             const errorData = await response.json().catch(() => null);
             showToast(errorData?.error || "Failed to update faculty. Please try again.", "error");

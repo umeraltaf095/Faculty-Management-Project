@@ -126,6 +126,18 @@
         await includeHTML("header", "header.html");
         await includeHTML("footer", "footer.html");
 
+        // Define logout globally
+        window.logout = function() {
+          localStorage.removeItem('role');
+          window.location.href = '../index.html';
+        };
+
+        // Role-based visibility
+        const role = localStorage.getItem('role');
+        if (role !== 'admin') {
+          document.querySelectorAll('.admin-only').forEach(el => el.style.display = 'none');
+        }
+
         // Init Sidebar Toggle
         const toggleBtn = document.getElementById("sidebarToggle");
         const sidebar = document.getElementById("sidebar");

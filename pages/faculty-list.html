@@ -34,6 +34,9 @@
           <input type="text" placeholder="Search by course" />
           <input type="text" placeholder="Search by expertise" />
         </div>
+        <div class="add-btn-container admin-only">
+          <button class="btn-add" onclick="window.location.href='add-faculty.html'">Add</button>
+        </div>
       </div>
 
       <!-- Table -->
@@ -58,7 +61,17 @@
     </div>
   </main>
 
-
+  <!-- Delete Confirmation Modal -->
+  <div class="delete-modal" id="deleteModal">
+    <div class="delete-modal-content">
+      <h3>Confirm Deletion</h3>
+      <p>Are you sure you want to delete this faculty member?</p>
+      <div class="modal-buttons">
+        <button type="button" class="btn-cancel-delete">Cancel</button>
+        <button type="button" class="btn-confirm-delete">Delete</button>
+      </div>
+    </div>
+  </div>
 
   <!-- Footer (loaded dynamically) -->
   <div id="footer"></div>
@@ -74,6 +87,18 @@
     async function initLayout() {
       await includeHTML("header", "header.html");
       await includeHTML("footer", "footer.html");
+
+      // Define logout globally
+      window.logout = function() {
+        localStorage.removeItem('role');
+        window.location.href = '../index.html';
+      };
+
+      // Role-based visibility
+      const role = localStorage.getItem('role');
+      if (role !== 'admin') {
+        document.querySelectorAll('.admin-only').forEach(el => el.style.display = 'none');
+      }
 
       // Init Sidebar Toggle
       const toggleBtn = document.getElementById("sidebarToggle");

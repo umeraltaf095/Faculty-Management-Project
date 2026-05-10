@@ -51,7 +51,7 @@
         <div class="recent-activity-section">
           <div class="section-header">
             <h3>Recently Added Faculty</h3>
-            <button class="view-all-btn" onclick="window.location.href='admin-dashboard.html'">View All</button>
+            <button class="view-all-btn" onclick="window.location.href='faculty-list.html'">View All</button>
           </div>
           
           <div class="recent-list" id="recentFacultyList">
@@ -77,6 +77,18 @@
       async function initLayout() {
         await includeHTML("header", "header.html");
         await includeHTML("footer", "footer.html");
+
+        // Define logout globally
+        window.logout = function() {
+          localStorage.removeItem('role');
+          window.location.href = '../index.html';
+        };
+
+        // Role-based visibility
+        const role = localStorage.getItem('role');
+        if (role !== 'admin') {
+          document.querySelectorAll('.admin-only').forEach(el => el.style.display = 'none');
+        }
 
         // Init Sidebar Toggle
         const toggleBtn = document.getElementById("sidebarToggle");

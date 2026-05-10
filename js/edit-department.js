@@ -1,9 +1,13 @@
 document.addEventListener("DOMContentLoaded", () => {
+  if (localStorage.getItem('role') !== 'admin') {
+    window.location.href = "department-list.html";
+    return;
+  }
   const departmentDataStr = sessionStorage.getItem("editDepartment");
 
   if (!departmentDataStr) {
     showToast("No department data found. Redirecting...", "error");
-    window.location.href = "admin-department.html";
+      window.location.href = "department-list.html";
     return;
   }
 
@@ -43,7 +47,7 @@ document.getElementById("editDepartmentForm").addEventListener("submit", async f
       showToast("Department updated successfully!", "success");
       // Clear session storage
       sessionStorage.removeItem("editDepartment");
-      window.location.href = "admin-department.html";
+        window.location.href = "department-list.html";
     } else {
       showToast("Failed to update department. Please try again.", "error");
     }

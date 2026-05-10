@@ -28,6 +28,7 @@ form.addEventListener("submit", async (event) => {
 
     // Assuming API returns something like { success: true } if login matches
     if (result.success) {
+      localStorage.setItem('role', 'admin');
       showToast("Login successful! Redirecting...", "success");
       setTimeout(() => { window.location.href = "pages/main-dashboard.html"; }, 1500); // redirect to main dashboard
     } else {
@@ -37,4 +38,3 @@ form.addEventListener("submit", async (event) => {
     showToast("Something went wrong. Please try again.", "error");
   }
 });
-

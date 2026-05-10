@@ -1,4 +1,8 @@
 document.addEventListener("DOMContentLoaded", async () => {
+  if (localStorage.getItem('role') !== 'admin') {
+    window.location.href = "faculty-list.html";
+    return;
+  }
   const form = document.getElementById("addFacultyForm");
   const departmentSelect = document.getElementById("departmentSelect");
 
@@ -51,7 +55,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
           showToast("Faculty added successfully!", "success");
           form.reset();
-          window.location.href = "admin-dashboard.html";
+          window.location.href = "faculty-list.html";
         } catch (error) {
           showToast("Error connecting to server.", "error");
         }

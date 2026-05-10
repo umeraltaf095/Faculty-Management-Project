@@ -1,3 +1,7 @@
+if (localStorage.getItem('role') !== 'admin') {
+  window.location.href = "department-list.html";
+}
+
 document.getElementById("addDepartmentForm").addEventListener("submit", async function (e) {
   e.preventDefault();
 
@@ -25,7 +29,7 @@ document.getElementById("addDepartmentForm").addEventListener("submit", async fu
 
     if (response.ok) {
       showToast("Department added successfully!", "success");
-      setTimeout(() => { window.location.href = "admin-department.html"; }, 1500);
+      setTimeout(() => { window.location.href = "department-list.html"; }, 1500);
     } else {
       showToast("Failed to add department. Please try again.", "error");
     }
