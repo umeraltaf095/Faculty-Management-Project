@@ -33,7 +33,7 @@ async function fetchFaculty() {
 
     renderTable();
   } catch (error) {
-    console.error("Error fetching faculty:", error);
+    showToast("Error fetching faculty:", error, "error");
   }
 }
 
@@ -251,13 +251,12 @@ document.addEventListener("click", function (e) {
             // Remove row from table
             row.remove();
 
-            alert(`Faculty "${facultyName}" deleted successfully.`);
+            showToast(`Faculty "${facultyName}" deleted successfully.`, "success");
           } else {
-            alert("Failed to delete faculty. Please try again.");
+            showToast("Failed to delete faculty. Please try again.", "error");
           }
         } catch (error) {
-          console.error("Error deleting faculty:", error);
-          alert("An error occurred while deleting the record.");
+          showToast("An error occurred while deleting the record.", "error");
         } finally {
           deleteModal.style.display = "none";
         }

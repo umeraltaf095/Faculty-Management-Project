@@ -19,11 +19,11 @@ document.addEventListener("DOMContentLoaded", () => {
         const imgUrl = (facultyData.image && facultyData.image !== "null" && facultyData.image !== "undefined") ? facultyData.image : placeholder;
         imgContainer.innerHTML = `<img src="${imgUrl}" alt="${facultyData.name}" style="width: 150px; height: 150px; border-radius: 50%; object-fit: cover; border: 4px solid #ddd;" onerror="this.src='${placeholder}'">`;
       } catch (e) {
-        console.error("Error parsing faculty data:", e);
+        showToast("Error parsing faculty data:", e, "error");
       }
     } else {
       // If no data, probably loaded page directly, redirect back
-      alert("No faculty selected for viewing.");
+      showToast("No faculty selected for viewing.", "error");
       window.history.back();
     }
   }

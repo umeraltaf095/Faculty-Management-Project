@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const departmentDataStr = sessionStorage.getItem("editDepartment");
 
   if (!departmentDataStr) {
-    alert("No department data found. Redirecting...");
+    showToast("No department data found. Redirecting...", "error");
     window.location.href = "admin-department.html";
     return;
   }
@@ -20,7 +20,7 @@ document.getElementById("editDepartmentForm").addEventListener("submit", async f
   const departmentName = document.getElementById("departmentName").value.trim();
 
   if (!departmentName) {
-    alert("Please enter a department name.");
+    showToast("Please enter a department name.", "error");
     return;
   }
 
@@ -40,15 +40,14 @@ document.getElementById("editDepartmentForm").addEventListener("submit", async f
     });
 
     if (response.ok) {
-      alert("Department updated successfully!");
+      showToast("Department updated successfully!", "success");
       // Clear session storage
       sessionStorage.removeItem("editDepartment");
       window.location.href = "admin-department.html";
     } else {
-      alert("Failed to update department. Please try again.");
+      showToast("Failed to update department. Please try again.", "error");
     }
   } catch (error) {
-    console.error("Error updating department:", error);
-    alert("An error occurred while communicating with the server.");
+    showToast("An error occurred while communicating with the server.", "error");
   }
 });

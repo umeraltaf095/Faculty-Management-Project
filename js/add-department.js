@@ -4,7 +4,7 @@ document.getElementById("addDepartmentForm").addEventListener("submit", async fu
   const departmentName = document.getElementById("department").value.trim();
 
   if (!departmentName) {
-    alert("Please enter a department name.");
+    showToast("Please enter a department name.", "error");
     return;
   }
 
@@ -24,13 +24,12 @@ document.getElementById("addDepartmentForm").addEventListener("submit", async fu
     });
 
     if (response.ok) {
-      alert("Department added successfully!");
-      window.location.href = "admin-department.html";
+      showToast("Department added successfully!", "success");
+      setTimeout(() => { window.location.href = "admin-department.html"; }, 1500);
     } else {
-      alert("Failed to add department. Please try again.");
+      showToast("Failed to add department. Please try again.", "error");
     }
   } catch (error) {
-    console.error("Error adding department:", error);
-    alert("An error occurred while communicating with the server.");
+    showToast("An error occurred while communicating with the server.", "error");
   }
 });

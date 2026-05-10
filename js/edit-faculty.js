@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
       }
     } catch (error) {
-      console.error("Error fetching departments:", error);
+      showToast("Error fetching departments:", error, "error");
     }
   }
 
@@ -49,10 +49,10 @@ document.addEventListener("DOMContentLoaded", async () => {
           preview.innerHTML = `<img src="${imgUrl}" class="faculty-img" style="width: 50px; height: 50px;" onerror="this.src='${placeholder}'">`;
         }
       } catch (e) {
-        console.error("Error parsing faculty data:", e);
+        showToast("Error parsing faculty data:", e, "error");
       }
     } else {
-      alert("No faculty selected for editing.");
+      showToast("No faculty selected for editing.", "error");
       window.location.href = "admin-dashboard.html";
       return;
     }
@@ -74,16 +74,15 @@ document.addEventListener("DOMContentLoaded", async () => {
           });
 
           if (response.ok) {
-            alert("Faculty updated successfully!");
+            showToast("Faculty updated successfully!", "success");
             sessionStorage.removeItem("editFaculty");
             window.location.href = "admin-dashboard.html";
           } else {
             const errorData = await response.json().catch(() => null);
-            alert(errorData?.error || "Failed to update faculty. Please try again.");
+            showToast(errorData?.error || "Failed to update faculty. Please try again.", "error");
           }
         } catch (error) {
-          console.error("Error updating faculty:", error);
-          alert("An error occurred while updating the record.");
+          showToast("An error occurred while updating the record.", "error");
         }
       };
 

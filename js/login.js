@@ -10,7 +10,7 @@ form.addEventListener("submit", async (event) => {
   const password = passwordInput.value.trim();
 
   if (!email || !password) {
-    alert("Please fill in both email and password.");
+    showToast("Please fill in both email and password.", "error");
     return;
   }
 
@@ -28,14 +28,13 @@ form.addEventListener("submit", async (event) => {
 
     // Assuming API returns something like { success: true } if login matches
     if (result.success) {
-      alert("Login successful! Redirecting...");
-      window.location.href = "pages/main-dashboard.html"; // redirect to main dashboard
+      showToast("Login successful! Redirecting...", "success");
+      setTimeout(() => { window.location.href = "pages/main-dashboard.html"; }, 1500); // redirect to main dashboard
     } else {
-      alert("Invalid email or password.");
+      showToast("Invalid email or password.", "error");
     }
   } catch (error) {
-    console.error("Error during login:", error);
-    alert("Something went wrong. Please try again.");
+    showToast("Something went wrong. Please try again.", "error");
   }
 });
 

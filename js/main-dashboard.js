@@ -32,7 +32,7 @@ async function fetchDashboardData() {
         renderRecentFaculty(facultyData);
 
     } catch (error) {
-        console.error("Error fetching dashboard data:", error);
+        showToast("Error fetching dashboard data:", error, "error");
         document.getElementById('recentFacultyList').innerHTML = `<div class="loading-state">Failed to load data.</div>`;
     }
 }

@@ -31,7 +31,7 @@ async function fetchDepartments() {
 
     renderTable();
   } catch (error) {
-    console.error("Error fetching departments:", error);
+    showToast("Error fetching departments:", error, "error");
   }
 }
 
@@ -204,14 +204,13 @@ document.addEventListener("click", function (e) {
           if (response.ok) {
             // Remove row from table
             row.remove();
-            alert(`Department "${departmentName}" deleted successfully.`);
+            showToast(`Department "${departmentName}" deleted successfully.`, "success");
             fetchDepartments(); // refresh
           } else {
-            alert("Failed to delete department. Please try again.");
+            showToast("Failed to delete department. Please try again.", "error");
           }
         } catch (error) {
-          console.error("Error deleting department:", error);
-          alert("An error occurred while deleting the record.");
+          showToast("An error occurred while deleting the record.", "error");
         } finally {
           deleteModal.style.display = "none";
         }

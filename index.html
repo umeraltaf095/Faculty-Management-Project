@@ -3,29 +3,131 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Login</title>
+  <title>Admin Login — Faculty Management System</title>
+  <meta name="description" content="Secure administrator login for the Faculty Management System. Manage faculty, departments, and academic data efficiently.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/login.css">
 </head>
 <body>
-  <div class="login-container">
-    <h2>Login/Admin</h2>
-    <form class="login-form">
-      <label for="email">Email</label>
-      <input type="email" id="email" placeholder="Enter your email" required>
 
-      <label for="password">Password</label>
-      <input type="password" id="password" placeholder="Enter your password" required>
+  <div class="login-page">
 
-      <div class="button-group">
-        <button type="button" class="btn cancel">Cancel</button>
-        <button type="submit" class="btn login">Login</button>
+    <!-- LEFT PANEL: Login Form -->
+    <div class="login-panel">
+      <div class="login-panel-inner">
+
+        <div class="login-logo">
+          <div class="logo-icon">🎓</div>
+          <span class="logo-text">FacultyMS</span>
+        </div>
+
+        <div class="login-header">
+          <h1>Welcome back</h1>
+          <p>Sign in to your admin account to continue</p>
+        </div>
+
+        <form class="login-form" id="loginForm">
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <div class="input-wrapper">
+              <span class="input-icon">✉️</span>
+              <input type="email" id="email" placeholder="admin@university.edu" required autocomplete="email">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="password">Password</label>
+            <div class="input-wrapper">
+              <span class="input-icon">🔒</span>
+              <input type="password" id="password" placeholder="Enter your password" required autocomplete="current-password">
+              <button type="button" class="toggle-password" id="togglePassword" title="Toggle password visibility">👁️</button>
+            </div>
+          </div>
+
+          <button type="submit" class="btn-login" id="loginBtn">
+            <span class="btn-text">Sign In</span>
+            <span class="btn-spinner" id="btnSpinner" hidden>⏳</span>
+          </button>
+        </form>
+
+        <div class="divider"><span>or</span></div>
+
+        <div class="simple-user-link">
+          <a href="pages/faculty-list.html" id="simpleUserLink">
+            <span>👤</span> Access as a simple user
+          </a>
+        </div>
+
+        <p class="login-footer-note">
+          Protected portal — authorized personnel only
+        </p>
+
       </div>
-    </form>
-
-    <div class="simple-user-link">
-      <a href="pages/faculty-list.html">Access as a simple user</a>
     </div>
+
+    <!-- RIGHT PANEL: Branding -->
+    <div class="brand-panel">
+      <div class="brand-panel-inner">
+
+        <div class="brand-badge">Academic Administration</div>
+
+        <h2 class="brand-title">
+          Faculty Management<br>System
+        </h2>
+
+        <p class="brand-subtitle">
+          A centralized platform to manage faculty profiles, departments, courses, and academic data — all in one place.
+        </p>
+
+        <div class="brand-features">
+          <div class="feature-item">
+            <div class="feature-icon">👥</div>
+            <div class="feature-text">
+              <strong>Faculty Profiles</strong>
+              <span>Manage all faculty records and information</span>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">🏢</div>
+            <div class="feature-text">
+              <strong>Department Control</strong>
+              <span>Organize and oversee academic departments</span>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">📊</div>
+            <div class="feature-text">
+              <strong>Real-Time Dashboard</strong>
+              <span>Instant insights and statistics at a glance</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Decorative circles -->
+        <div class="deco-circle deco-circle-1"></div>
+        <div class="deco-circle deco-circle-2"></div>
+        <div class="deco-circle deco-circle-3"></div>
+      </div>
+    </div>
+
   </div>
-    <script src="js/login.js"></script>
+
+  <script src="js/toast.js"></script>
+  <script src="js/login.js"></script>
+
+  <script>
+    // Toggle password visibility
+    const toggleBtn = document.getElementById('togglePassword');
+    const passwordInput = document.getElementById('password');
+    if (toggleBtn && passwordInput) {
+      toggleBtn.addEventListener('click', () => {
+        const isHidden = passwordInput.type === 'password';
+        passwordInput.type = isHidden ? 'text' : 'password';
+        toggleBtn.textContent = isHidden ? '🙈' : '👁️';
+      });
+    }
+  </script>
 </body>
 </html>

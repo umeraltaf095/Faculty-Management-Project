@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
       }
     } catch (error) {
-      console.error("Error fetching departments:", error);
+      showToast("Error fetching departments:", error, "error");
     }
   }
 
@@ -42,19 +42,18 @@ document.addEventListener("DOMContentLoaded", async () => {
           if (!response.ok) {
             const errorData = await response.json().catch(() => null);
             if (errorData && errorData.error) {
-              alert(errorData.error);
+              showToast(errorData.error, "error");
             } else {
-              alert("Failed to add faculty. Please try again.");
+              showToast("Failed to add faculty. Please try again.", "error");
             }
             return;
           }
 
-          alert("Faculty added successfully!");
+          showToast("Faculty added successfully!", "success");
           form.reset();
           window.location.href = "admin-dashboard.html";
         } catch (error) {
-          console.error("Error:", error);
-          alert("Error connecting to server.");
+          showToast("Error connecting to server.", "error");
         }
       };
 
