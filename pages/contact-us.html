@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact Us — Faculty Management System</title>
+    
+    <!-- Common styles for header & footer -->
+    <link rel="stylesheet" href="../css/common.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+      .contact-container {
+        padding: 32px;
+        max-width: 1200px;
+        margin: 0 auto;
+        font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        box-sizing: border-box;
+      }
+      
+      .contact-hero {
+        background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+        color: white;
+        padding: 36px;
+        border-radius: 20px;
+        margin-bottom: 32px;
+        box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.2);
+        border: 1px solid #334155;
+      }
+      
+      .contact-hero-tag {
+        font-size: 11px;
+        font-weight: 800;
+        color: #60a5fa;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+      }
+      
+      .contact-hero h2 {
+        font-size: 30px;
+        font-weight: 800;
+        margin: 8px 0 10px 0;
+        letter-spacing: -0.5px;
+      }
+      
+      .contact-hero p {
+        color: #94a3b8;
+        font-size: 15px;
+        line-height: 1.5;
+        margin: 0;
+        max-width: 700px;
+      }
+
+      .contact-main-grid {
+        display: grid;
+        grid-template-columns: 1fr 400px;
+        gap: 32px;
+      }
+
+      .contact-card {
+        background: white;
+        border: 1px solid #e2e8f0;
+        border-radius: 20px;
+        padding: 32px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03);
+      }
+
+      .card-title-group {
+        margin-bottom: 24px;
+        padding-bottom: 14px;
+        border-bottom: 1px solid #f1f5f9;
+      }
+
+      .card-title-group h3 {
+        font-size: 20px;
+        font-weight: 800;
+        color: #0f172a;
+        margin: 0 0 4px 0;
+      }
+
+      .card-title-group p {
+        font-size: 14px;
+        color: #64748b;
+        margin: 0;
+      }
+
+      .contact-form {
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+      }
+
+      .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+      }
+
+      .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+
+      .form-group label {
+        font-size: 12px;
+        font-weight: 700;
+        color: #475569;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .form-group input,
+      .form-group select,
+      .form-group textarea {
+        width: 100%;
+        padding: 12px 14px;
+        border: 1px solid #cbd5e1;
+        border-radius: 10px;
+        font-size: 14px;
+        color: #1e293b;
+        background: #f8fafc;
+        transition: all 0.2s ease;
+        box-sizing: border-box;
+        font-family: inherit;
+      }
+
+      .form-group input:focus,
+      .form-group select:focus,
+      .form-group textarea:focus {
+        outline: none;
+        background: #ffffff;
+        border-color: #2563eb;
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+      }
+
+      .btn-submit-contact {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        background: linear-gradient(135deg, #2563eb, #1d4ed8);
+        color: white;
+        border: none;
+        padding: 14px 28px;
+        border-radius: 10px;
+        font-weight: 700;
+        font-size: 15px;
+        cursor: pointer;
+        box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        margin-top: 6px;
+      }
+
+      .btn-submit-contact:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(37, 99, 235, 0.35);
+      }
+
+      /* Sidebar Contact Widgets */
+      .contact-side-col {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+      }
+
+      .info-item-list {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      .info-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 14px;
+      }
+
+      .info-icon {
+        width: 42px;
+        height: 42px;
+        border-radius: 12px;
+        background: #eff6ff;
+        color: #2563eb;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+        flex-shrink: 0;
+      }
+
+      .info-text {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .info-text strong {
+        font-size: 14px;
+        color: #0f172a;
+      }
+
+      .info-text span {
+        font-size: 13px;
+        color: #64748b;
+        margin-top: 2px;
+      }
+
+      /* FAQ Accordion */
+      .faq-list {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .faq-item {
+        border: 1px solid #e2e8f0;
+        border-radius: 12px;
+        overflow: hidden;
+        background: #f8fafc;
+      }
+
+      .faq-question {
+        padding: 14px 16px;
+        font-size: 14px;
+        font-weight: 700;
+        color: #0f172a;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        user-select: none;
+      }
+
+      .faq-question:hover {
+        background: #f1f5f9;
+      }
+
+      .faq-answer {
+        padding: 0 16px 14px 16px;
+        font-size: 13px;
+        color: #64748b;
+        line-height: 1.5;
+        display: none;
+      }
+
+      .faq-item.active .faq-answer {
+        display: block;
+      }
+
+      .faq-item.active .faq-icon {
+        transform: rotate(180deg);
+      }
+
+      @media (max-width: 900px) {
+        .contact-main-grid {
+          grid-template-columns: 1fr;
+        }
+        .form-row {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header (loaded dynamically) -->
+    <div id="header"></div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <div class="contact-container">
+        
+        <!-- Hero Section -->
+        <div class="contact-hero">
+          <span class="contact-hero-tag">SUPPORT & INQUIRIES</span>
+          <h2>Contact Administration</h2>
+          <p>
+            Have a question, feedback, or need help updating a faculty record? 
+            Reach out to our administrative support team using the form below or contact us directly.
+          </p>
+        </div>
+
+        <!-- 2-Column Main Layout -->
+        <div class="contact-main-grid">
+          
+          <!-- LEFT COLUMN: Contact Form -->
+          <div class="contact-card">
+            <div class="card-title-group">
+              <h3>Send Us a Message</h3>
+              <p>Fill out the details below and our team will get back to you within 24 hours.</p>
+            </div>
+
+            <form id="contactForm" class="contact-form">
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="contactName">Full Name</label>
+                  <input type="text" id="contactName" placeholder="e.g. Alex Johnson" required />
+                </div>
+                <div class="form-group">
+                  <label for="contactEmail">Email Address</label>
+                  <input type="email" id="contactEmail" placeholder="alex@university.edu" required />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="contactSubject">Inquiry Topic</label>
+                <select id="contactSubject" required>
+                  <option value="General Inquiry">General Inquiry</option>
+                  <option value="Faculty Record Update Request">Faculty Record Update Request</option>
+                  <option value="Department Query">Department Query</option>
+                  <option value="Technical Support">Technical System Support</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="contactMessage">Message</label>
+                <textarea id="contactMessage" rows="5" placeholder="Write your inquiry or message here..." required></textarea>
+              </div>
+
+              <button type="submit" class="btn-submit-contact">
+                <span>📩</span> Send Message
+              </button>
+            </form>
+          </div>
+
+          <!-- RIGHT COLUMN: Contact Details & FAQ -->
+          <div class="contact-side-col">
+            
+            <!-- Contact Info Card -->
+            <div class="contact-card">
+              <div class="card-title-group">
+                <h3>Contact Information</h3>
+                <p>Direct communication channels</p>
+              </div>
+
+              <div class="info-item-list">
+                <div class="info-item">
+                  <div class="info-icon">✉️</div>
+                  <div class="info-text">
+                    <strong>Support Email</strong>
+                    <span>support@faculty-directory.edu</span>
+                  </div>
+                </div>
+
+                <div class="info-item">
+                  <div class="info-icon">📞</div>
+                  <div class="info-text">
+                    <strong>Phone Line</strong>
+                    <span>+1 (800) 555-FACULTY</span>
+                  </div>
+                </div>
+
+                <div class="info-item">
+                  <div class="info-icon">🏢</div>
+                  <div class="info-text">
+                    <strong>Office Location</strong>
+                    <span>Academic Affairs Building, Suite 400</span>
+                  </div>
+                </div>
+
+                <div class="info-item">
+                  <div class="info-icon">🕒</div>
+                  <div class="info-text">
+                    <strong>Working Hours</strong>
+                    <span>Mon - Fri: 8:00 AM - 5:00 PM</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- FAQ Accordion Card -->
+            <div class="contact-card">
+              <div class="card-title-group">
+                <h3>Frequently Asked Questions</h3>
+                <p>Quick answers to common questions</p>
+              </div>
+
+              <div class="faq-list">
+                <div class="faq-item">
+                  <div class="faq-question">
+                    <span>Do I need an account to search for faculty?</span>
+                    <span class="faq-icon">▼</span>
+                  </div>
+                  <div class="faq-answer">
+                    No, guest visitors can search and view all faculty profiles, courses taught, and areas of expertise without registration.
+                  </div>
+                </div>
+
+                <div class="faq-item">
+                  <div class="faq-question">
+                    <span>How do admins add or update a faculty profile?</span>
+                    <span class="faq-icon">▼</span>
+                  </div>
+                  <div class="faq-answer">
+                    Authorized admins log in with admin credentials, navigate to the Faculty Directory or Main Dashboard, and click "Add Faculty" or the edit icon on any profile card.
+                  </div>
+                </div>
+
+                <div class="faq-item">
+                  <div class="faq-question">
+                    <span>Which search filters are available?</span>
+                    <span class="faq-icon">▼</span>
+                  </div>
+                  <div class="faq-answer">
+                    You can refine searches across 5 criteria: Name, Department, Courses Taught, Area of Expertise, and Professional Interests.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </main>
+
+    <!-- Footer (loaded dynamically) -->
+    <div id="footer"></div>
+
+    <!-- Script to load header & footer -->
+    <script>
+      async function includeHTML(id, file) {
+        const res = await fetch(file);
+        const html = await res.text();
+        document.getElementById(id).innerHTML = html;
+      }
+
+      async function initLayout() {
+        await includeHTML("header", "header.html");
+        await includeHTML("footer", "footer.html");
+
+        // Define logout globally
+        window.logout = function() {
+          localStorage.removeItem('role');
+          window.location.href = '../index.html';
+        };
+
+        // Role-based visibility & Header Badges
+        const role = localStorage.getItem('role');
+        const isAdmin = role === 'admin';
+
+        if (!isAdmin) {
+          document.querySelectorAll('.admin-only').forEach(el => el.style.display = 'none');
+        }
+
+        const roleTextDisplay = document.getElementById('roleTextDisplay');
+        const roleIconDisplay = document.getElementById('roleIconDisplay');
+        const sidebarUserTitle = document.getElementById('sidebarUserTitle');
+        const sidebarUserStatus = document.getElementById('sidebarUserStatus');
+
+        if (roleTextDisplay) roleTextDisplay.textContent = isAdmin ? 'Administrator' : 'Guest Visitor';
+        if (roleIconDisplay) roleIconDisplay.textContent = isAdmin ? '⚡' : '👤';
+        if (sidebarUserTitle) sidebarUserTitle.textContent = isAdmin ? 'Admin Account' : 'Guest Visitor';
+        if (sidebarUserStatus) sidebarUserStatus.textContent = isAdmin ? 'Full Control' : 'Read-Only';
+
+        // Init Sidebar Toggle
+        const toggleBtn = document.getElementById("sidebarToggle");
+        if (toggleBtn) {
+          toggleBtn.addEventListener("click", () => {
+            document.body.classList.toggle("sidebar-closed");
+          });
+        }
+
+        // Highlight active page
+        const navLinks = document.querySelectorAll('.sidebar-nav a');
+        const currentPath = window.location.pathname;
+        let currentFile = currentPath.split('/').pop();
+        if (!currentFile) currentFile = 'index.html';
+
+        navLinks.forEach(link => {
+          if(link.getAttribute('href') === currentFile) {
+            link.classList.add('active-page');
+          }
+        });
+      }
+
+      initLayout();
+
+      // Contact Form Event Handler
+      document.addEventListener("DOMContentLoaded", () => {
+        const form = document.getElementById("contactForm");
+        if (form) {
+          form.addEventListener("submit", (e) => {
+            e.preventDefault();
+            if (typeof showToast === 'function') {
+              showToast("Thank you! Your message has been sent successfully to the administration.", "success");
+            } else {
+              alert("Thank you! Your message has been sent successfully.");
+            }
+            form.reset();
+          });
+        }
+
+        // FAQ Accordion Toggle Logic
+        document.querySelectorAll(".faq-question").forEach(q => {
+          q.addEventListener("click", () => {
+            const item = q.closest(".faq-item");
+            item.classList.toggle("active");
+          });
+        });
+      });
+    </script>
+    <script src="../js/toast.js"></script>
+  </body>
+</html>

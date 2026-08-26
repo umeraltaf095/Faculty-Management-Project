@@ -19,44 +19,94 @@
   <!-- Main Content -->
   <main class="main-content">
     <div class="faculty-container">
-      <h2>Faculty Details</h2>
-
-      <div class="search-section">
-        <div class="search-labels">
-          <span>Name</span>
-          <span>Department</span>
-          <span>Course Taught</span>
-          <span>Area of Expertise</span>
+      <div class="directory-header">
+        <div>
+          <h2>Faculty Directory</h2>
+          <p class="directory-subtitle">Search, discover, and connect with academic faculty members across all departments</p>
         </div>
-        <div class="search-bars">
-          <input type="text" placeholder="Search by name" />
-          <input type="text" placeholder="Search by department" />
-          <input type="text" placeholder="Search by course" />
-          <input type="text" placeholder="Search by expertise" />
-        </div>
-        <div class="add-btn-container admin-only">
-          <button class="btn-add" onclick="window.location.href='add-faculty.html'">Add</button>
+        <div class="header-actions">
+          <div class="view-toggle">
+            <button type="button" class="btn-toggle active" id="viewGridBtn" title="Grid View">
+              <span class="toggle-icon">🎴</span> Grid
+            </button>
+            <button type="button" class="btn-toggle" id="viewTableBtn" title="Table View">
+              <span class="toggle-icon">📑</span> Table
+            </button>
+          </div>
+          <div class="add-btn-container admin-only">
+            <button class="btn-add" onclick="window.location.href='add-faculty.html'">
+              <span>➕</span> Add Faculty
+            </button>
+          </div>
         </div>
       </div>
 
-      <!-- Table -->
-      <table class="faculty-table">
-        <thead>
-          <tr>
-            <th>Profile</th>
-            <th>Name</th>
-            <th>Department</th>
-            <th>Courses Taught</th>
-            <th>Expertise</th>
-            <th>Interests</th>
-            <th>Email</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          <!-- Faculty data will be rendered dynamically -->
-        </tbody>
-      </table>
+      <div class="search-section">
+        <div class="search-grid">
+          <div class="search-field">
+            <label for="searchName">Name</label>
+            <div class="input-icon-wrapper">
+              <span class="field-icon">🔍</span>
+              <input type="text" id="searchName" placeholder="Search by name..." />
+            </div>
+          </div>
+          <div class="search-field">
+            <label for="searchDept">Department</label>
+            <div class="input-icon-wrapper">
+              <span class="field-icon">🏢</span>
+              <input type="text" id="searchDept" placeholder="Search by department..." />
+            </div>
+          </div>
+          <div class="search-field">
+            <label for="searchCourse">Course Taught</label>
+            <div class="input-icon-wrapper">
+              <span class="field-icon">📚</span>
+              <input type="text" id="searchCourse" placeholder="Search by course..." />
+            </div>
+          </div>
+          <div class="search-field">
+            <label for="searchExpertise">Area of Expertise</label>
+            <div class="input-icon-wrapper">
+              <span class="field-icon">💡</span>
+              <input type="text" id="searchExpertise" placeholder="Search by expertise..." />
+            </div>
+          </div>
+          <div class="search-field">
+            <label for="searchInterests">Professional Interests</label>
+            <div class="input-icon-wrapper">
+              <span class="field-icon">🌟</span>
+              <input type="text" id="searchInterests" placeholder="Search by interests..." />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card Grid Container (Default View) -->
+      <div class="faculty-grid" id="facultyGrid">
+        <!-- Faculty cards rendered dynamically -->
+      </div>
+
+      <!-- Table View (Alternative) -->
+      <div class="table-responsive" id="tableContainer" style="display: none;">
+        <table class="faculty-table" id="facultyTable">
+          <thead>
+            <tr>
+              <th>Profile</th>
+              <th>Name</th>
+              <th>Department</th>
+              <th>Courses Taught</th>
+              <th>Expertise</th>
+              <th>Interests</th>
+              <th>Email</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Faculty data rendered dynamically -->
+          </tbody>
+        </table>
+      </div>
+
       <div id="paginationContainer" class="pagination"></div>
     </div>
   </main>
@@ -94,20 +144,30 @@
         window.location.href = '../index.html';
       };
 
-      // Role-based visibility
+      // Role-based visibility & Header Badges
       const role = localStorage.getItem('role');
-      if (role !== 'admin') {
+      const isAdmin = role === 'admin';
+
+      if (!isAdmin) {
         document.querySelectorAll('.admin-only').forEach(el => el.style.display = 'none');
       }
 
+      const roleTextDisplay = document.getElementById('roleTextDisplay');
+      const roleIconDisplay = document.getElementById('roleIconDisplay');
+      const sidebarUserTitle = document.getElementById('sidebarUserTitle');
+      const sidebarUserStatus = document.getElementById('sidebarUserStatus');
+
+      if (roleTextDisplay) roleTextDisplay.textContent = isAdmin ? 'Administrator' : 'Guest Visitor';
+      if (roleIconDisplay) roleIconDisplay.textContent = isAdmin ? '⚡' : '👤';
+      if (sidebarUserTitle) sidebarUserTitle.textContent = isAdmin ? 'Admin Account' : 'Guest Visitor';
+      if (sidebarUserStatus) sidebarUserStatus.textContent = isAdmin ? 'Full Control' : 'Read-Only';
+
       // Init Sidebar Toggle
       const toggleBtn = document.getElementById("sidebarToggle");
-      const sidebar = document.getElementById("sidebar");
-      if (toggleBtn && sidebar) {
-          toggleBtn.addEventListener("click", () => {
-              sidebar.classList.toggle("sidebar-closed");
-              document.body.classList.toggle("sidebar-closed");
-          });
+      if (toggleBtn) {
+        toggleBtn.addEventListener("click", () => {
+          document.body.classList.toggle("sidebar-closed");
+        });
       }
 
       // Highlight active page
@@ -117,9 +177,9 @@
       if (!currentFile) currentFile = 'index.html';
 
       navLinks.forEach(link => {
-          if(link.getAttribute('href') === currentFile) {
-              link.classList.add('active-page');
-          }
+        if(link.getAttribute('href') === currentFile) {
+          link.classList.add('active-page');
+        }
       });
     }
 

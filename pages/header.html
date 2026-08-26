@@ -1,24 +1,79 @@
 <!-- header.html -->
 <header class="main-header">
-  <div class="container header-content">
+  <div class="header-container">
     <div class="header-left">
-      <h1 class="site-title" id="pageTitleIndicator">Faculty Management System</h1>
+      <button id="sidebarToggle" class="hamburger-btn" title="Toggle Navigation Sidebar">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="header-title-wrapper">
+        <span class="portal-tag">ACADEMIC PORTAL</span>
+        <h1 class="site-title" id="pageTitleIndicator">Faculty Management System</h1>
+      </div>
     </div>
-    <button class="logout-btn" onclick="logout()">Logout</button>
+    <div class="header-right">
+      <div class="user-role-badge" id="userRoleBadge">
+        <span class="role-icon" id="roleIconDisplay">👤</span>
+        <span class="role-text" id="roleTextDisplay">User</span>
+      </div>
+      <button class="logout-btn" onclick="logout()" title="Sign Out">
+        <span class="logout-icon">🚪</span>
+        <span class="logout-text">Logout</span>
+      </button>
+    </div>
   </div>
 </header>
 
 <!-- Sidebar -->
 <aside id="sidebar" class="sidebar">
-  <div class="sidebar-header" style="padding: 10px; justify-content: center;">
-    <img src="../images/Capture.PNG" alt="Logo" style="width: 100%; max-height: 50px; object-fit: contain;">
-    <button id="sidebarToggle" class="hamburger-btn" style="position: absolute; right: 10px; top: 15px;">
-      <span></span><span></span><span></span>
-    </button>
+  <div class="sidebar-brand">
+    <div class="brand-logo-icon">🎓</div>
+    <div class="brand-text-wrapper">
+      <span class="brand-name">FacultyMS</span>
+      <span class="brand-sub">Directory System</span>
+    </div>
   </div>
-  <ul class="sidebar-nav">
-    <li><a href="main-dashboard.html" class="nav-link">Main Dashboard</a></li>
-    <li><a href="faculty-list.html" class="nav-link">Faculty List</a></li>
-    <li><a href="department-list.html" class="nav-link">Departments</a></li>
-  </ul>
+
+  <div class="sidebar-menu-wrapper">
+    <div class="menu-label">MAIN NAVIGATION</div>
+    <ul class="sidebar-nav">
+      <li>
+        <a href="main-dashboard.html" class="nav-link">
+          <span class="nav-icon">📊</span>
+          <span class="nav-text">Main Dashboard</span>
+        </a>
+      </li>
+      <li>
+        <a href="faculty-list.html" class="nav-link">
+          <span class="nav-icon">👨‍🏫</span>
+          <span class="nav-text">Faculty Directory</span>
+        </a>
+      </li>
+      <li>
+        <a href="department-list.html" class="nav-link">
+          <span class="nav-icon">🏢</span>
+          <span class="nav-text">Departments</span>
+        </a>
+      </li>
+      <li>
+        <a href="about-us.html" class="nav-link">
+          <span class="nav-icon">ℹ️</span>
+          <span class="nav-text">About Us</span>
+        </a>
+      </li>
+      <li>
+        <a href="contact-us.html" class="nav-link">
+          <span class="nav-icon">📞</span>
+          <span class="nav-text">Contact Us</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <div class="sidebar-user-footer">
+    <div class="user-avatar-sm" id="sidebarAvatarIcon">👤</div>
+    <div class="user-info-sm">
+      <span class="user-title" id="sidebarUserTitle">Logged In</span>
+      <span class="user-status" id="sidebarUserStatus">Active Session</span>
+    </div>
+  </div>
 </aside>

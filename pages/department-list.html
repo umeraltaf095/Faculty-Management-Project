@@ -83,20 +83,30 @@
         window.location.href = '../index.html';
       };
 
-      // Role-based visibility
+      // Role-based visibility & Header Badges
       const role = localStorage.getItem('role');
-      if (role !== 'admin') {
+      const isAdmin = role === 'admin';
+
+      if (!isAdmin) {
         document.querySelectorAll('.admin-only').forEach(el => el.style.display = 'none');
       }
 
+      const roleTextDisplay = document.getElementById('roleTextDisplay');
+      const roleIconDisplay = document.getElementById('roleIconDisplay');
+      const sidebarUserTitle = document.getElementById('sidebarUserTitle');
+      const sidebarUserStatus = document.getElementById('sidebarUserStatus');
+
+      if (roleTextDisplay) roleTextDisplay.textContent = isAdmin ? 'Administrator' : 'Guest Visitor';
+      if (roleIconDisplay) roleIconDisplay.textContent = isAdmin ? '⚡' : '👤';
+      if (sidebarUserTitle) sidebarUserTitle.textContent = isAdmin ? 'Admin Account' : 'Guest Visitor';
+      if (sidebarUserStatus) sidebarUserStatus.textContent = isAdmin ? 'Full Control' : 'Read-Only';
+
       // Init Sidebar Toggle
       const toggleBtn = document.getElementById("sidebarToggle");
-      const sidebar = document.getElementById("sidebar");
-      if (toggleBtn && sidebar) {
-          toggleBtn.addEventListener("click", () => {
-              sidebar.classList.toggle("sidebar-closed");
-              document.body.classList.toggle("sidebar-closed");
-          });
+      if (toggleBtn) {
+        toggleBtn.addEventListener("click", () => {
+          document.body.classList.toggle("sidebar-closed");
+        });
       }
 
       // Highlight active page
@@ -106,9 +116,9 @@
       if (!currentFile) currentFile = 'index.html';
 
       navLinks.forEach(link => {
-          if(link.getAttribute('href') === currentFile) {
-              link.classList.add('active-page');
-          }
+        if(link.getAttribute('href') === currentFile) {
+          link.classList.add('active-page');
+        }
       });
     }
 

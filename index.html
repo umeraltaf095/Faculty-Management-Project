@@ -120,11 +120,11 @@
   <script>
     // Toggle password visibility
     const toggleBtn = document.getElementById('togglePassword');
-    const passwordInput = document.getElementById('password');
-    if (toggleBtn && passwordInput) {
+    const passInput = document.getElementById('password');
+    if (toggleBtn && passInput) {
       toggleBtn.addEventListener('click', () => {
-        const isHidden = passwordInput.type === 'password';
-        passwordInput.type = isHidden ? 'text' : 'password';
+        const isHidden = passInput.type === 'password';
+        passInput.type = isHidden ? 'text' : 'password';
         toggleBtn.textContent = isHidden ? '🙈' : '👁️';
       });
     }

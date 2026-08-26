@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About Us — Faculty Management System</title>
+    
+    <!-- Common styles for header & footer -->
+    <link rel="stylesheet" href="../css/common.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+      .about-container {
+        padding: 32px;
+        max-width: 1100px;
+        margin: 0 auto;
+        font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      }
+      
+      .about-hero {
+        background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+        color: white;
+        padding: 40px 36px;
+        border-radius: 20px;
+        margin-bottom: 32px;
+        box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.2);
+        border: 1px solid #334155;
+      }
+      
+      .about-hero-tag {
+        font-size: 11px;
+        font-weight: 800;
+        color: #60a5fa;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+      }
+      
+      .about-hero h2 {
+        font-size: 32px;
+        font-weight: 800;
+        margin: 8px 0 12px 0;
+        letter-spacing: -0.5px;
+      }
+      
+      .about-hero p {
+        color: #94a3b8;
+        font-size: 15px;
+        line-height: 1.6;
+        margin: 0;
+        max-width: 750px;
+      }
+
+      .section-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 24px;
+        margin-bottom: 32px;
+      }
+
+      .info-card {
+        background: white;
+        border: 1px solid #e2e8f0;
+        border-radius: 16px;
+        padding: 28px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.04);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      .info-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 20px -5px rgba(0, 0, 0, 0.08);
+      }
+
+      .card-icon-badge {
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+        background: #eff6ff;
+        color: #2563eb;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        margin-bottom: 16px;
+      }
+
+      .info-card h3 {
+        font-size: 18px;
+        font-weight: 700;
+        color: #0f172a;
+        margin: 0 0 8px 0;
+      }
+
+      .info-card p {
+        font-size: 14px;
+        color: #64748b;
+        line-height: 1.5;
+        margin: 0;
+      }
+
+      .team-section {
+        background: white;
+        border: 1px solid #e2e8f0;
+        border-radius: 20px;
+        padding: 32px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03);
+      }
+
+      .team-header {
+        text-align: center;
+        margin-bottom: 24px;
+      }
+
+      .team-header h3 {
+        font-size: 22px;
+        font-weight: 800;
+        color: #0f172a;
+        margin: 0 0 6px 0;
+      }
+
+      .team-header p {
+        color: #64748b;
+        font-size: 14px;
+        margin: 0;
+      }
+
+      .team-details-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 20px;
+      }
+
+      .team-box {
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        border-radius: 12px;
+        padding: 20px;
+        text-align: center;
+      }
+
+      .team-avatar {
+        font-size: 36px;
+        margin-bottom: 10px;
+      }
+
+      .team-name {
+        font-size: 16px;
+        font-weight: 700;
+        color: #0f172a;
+        margin: 0 0 4px 0;
+      }
+
+      .team-role {
+        font-size: 12px;
+        font-weight: 600;
+        color: #2563eb;
+        background: #eff6ff;
+        padding: 3px 10px;
+        border-radius: 12px;
+        display: inline-block;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header (loaded dynamically) -->
+    <div id="header"></div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <div class="about-container">
+        
+        <!-- Hero Section -->
+        <div class="about-hero">
+          <span class="about-hero-tag">ABOUT FACULTYMS</span>
+          <h2>Online Faculty & Staff Directory System</h2>
+          <p>
+            An efficient, centralized web portal designed to streamline access to university faculty information. 
+            FacultyMS allows students, researchers, and visitors to quickly locate professor contact details, academic departments, courses taught, and professional areas of expertise—all without registration.
+          </p>
+        </div>
+
+        <!-- System Capabilities Cards Grid -->
+        <div class="section-grid">
+          <div class="info-card">
+            <div class="card-icon-badge">👨‍🏫</div>
+            <h3>Faculty Directory</h3>
+            <p>View comprehensive professor profiles with high-resolution photos, direct email links, courses taught, and research tags.</p>
+          </div>
+
+          <div class="info-card">
+            <div class="card-icon-badge">🔍</div>
+            <h3>Multi-Filter Search</h3>
+            <p>Instantly refine directory searches across 5 distinct criteria: Professor Name, Department, Courses Taught, Expertise, and Interests.</p>
+          </div>
+
+          <div class="info-card">
+            <div class="card-icon-badge">⚡</div>
+            <h3>Admin Management</h3>
+            <p>Authorized personnel have full administrative controls to register new faculty, update academic records, and manage departments.</p>
+          </div>
+
+          <div class="info-card">
+            <div class="card-icon-badge">📊</div>
+            <h3>Real-Time Analytics</h3>
+            <p>Live metrics and visual department breakdown graphics providing instant insights into university staff allocation.</p>
+          </div>
+        </div>
+
+        <!-- Project Attribution Section -->
+        <div class="team-section">
+          <div class="team-header">
+            <h3>Project Information & Team</h3>
+            <p>Developed under Web Programming Domain Category</p>
+          </div>
+
+          <div class="team-details-grid">
+            <div class="team-box">
+              <div class="team-avatar">👩‍💻</div>
+              <h4 class="team-name">Sonia Khan</h4>
+              <span class="team-role">Lead Developer</span>
+            </div>
+
+            <div class="team-box">
+              <div class="team-avatar">🎓</div>
+              <h4 class="team-name">Academic Team</h4>
+              <span class="team-role">System Architecture</span>
+            </div>
+
+            <div class="team-box">
+              <div class="team-avatar">⚡</div>
+              <h4 class="team-name">Web Development</h4>
+              <span class="team-role">Frontend & API</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+
+    <!-- Footer (loaded dynamically) -->
+    <div id="footer"></div>
+
+    <!-- Script to load header & footer -->
+    <script>
+      async function includeHTML(id, file) {
+        const res = await fetch(file);
+        const html = await res.text();
+        document.getElementById(id).innerHTML = html;
+      }
+
+      async function initLayout() {
+        await includeHTML("header", "header.html");
+        await includeHTML("footer", "footer.html");
+
+        // Define logout globally
+        window.logout = function() {
+          localStorage.removeItem('role');
+          window.location.href = '../index.html';
+        };
+
+        // Role-based visibility & Header Badges
+        const role = localStorage.getItem('role');
+        const isAdmin = role === 'admin';
+
+        if (!isAdmin) {
+          document.querySelectorAll('.admin-only').forEach(el => el.style.display = 'none');
+        }
+
+        const roleTextDisplay = document.getElementById('roleTextDisplay');
+        const roleIconDisplay = document.getElementById('roleIconDisplay');
+        const sidebarUserTitle = document.getElementById('sidebarUserTitle');
+        const sidebarUserStatus = document.getElementById('sidebarUserStatus');
+
+        if (roleTextDisplay) roleTextDisplay.textContent = isAdmin ? 'Administrator' : 'Guest Visitor';
+        if (roleIconDisplay) roleIconDisplay.textContent = isAdmin ? '⚡' : '👤';
+        if (sidebarUserTitle) sidebarUserTitle.textContent = isAdmin ? 'Admin Account' : 'Guest Visitor';
+        if (sidebarUserStatus) sidebarUserStatus.textContent = isAdmin ? 'Full Control' : 'Read-Only';
+
+        // Init Sidebar Toggle
+        const toggleBtn = document.getElementById("sidebarToggle");
+        if (toggleBtn) {
+          toggleBtn.addEventListener("click", () => {
+            document.body.classList.toggle("sidebar-closed");
+          });
+        }
+
+        // Highlight active page
+        const navLinks = document.querySelectorAll('.sidebar-nav a');
+        const currentPath = window.location.pathname;
+        let currentFile = currentPath.split('/').pop();
+        if (!currentFile) currentFile = 'index.html';
+
+        navLinks.forEach(link => {
+          if(link.getAttribute('href') === currentFile) {
+            link.classList.add('active-page');
+          }
+        });
+      }
+
+      initLayout();
+    </script>
+    <script src="../js/toast.js"></script>
+  </body>
+</html>

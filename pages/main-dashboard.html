@@ -3,16 +3,15 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Main Dashboard</title>
+    <title>Main Dashboard — Faculty Management System</title>
 
     <!-- Common styles for header & footer -->
     <link rel="stylesheet" href="../css/common.css" />
-    <link rel="stylesheet" href="../css/admin-dashboard.css" />
     <!-- Page-specific styles -->
     <link rel="stylesheet" href="../css/main-dashboard.css" />
     
     <!-- Google Fonts for Modern Typography -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   </head>
   <body>
     <!-- Header (loaded dynamically) -->
@@ -22,42 +21,176 @@
     <main class="main-content">
       <div class="dashboard-container">
         
-        <!-- Welcome Section -->
-        <div class="welcome-section">
-            <h2>Welcome to Faculty Management System</h2>
-           
+        <!-- Welcome Hero Section -->
+        <div class="welcome-hero">
+          <div class="welcome-text-wrapper">
+            <span class="welcome-badge" id="welcomeBadgeText">OVERVIEW DASHBOARD</span>
+            <h2 id="welcomeHeading">Welcome to Faculty Management Portal</h2>
+            <p>Monitor system activity, faculty records, department breakdown, and quick management metrics.</p>
+          </div>
+          <div class="welcome-actions">
+            <button class="btn-hero primary admin-only" onclick="window.location.href='add-faculty.html'">
+              <span>➕</span> Add Faculty
+            </button>
+            <button class="btn-hero secondary admin-only" onclick="window.location.href='add-department.html'">
+              <span>🏢</span> Add Department
+            </button>
+            <button class="btn-hero outline" onclick="window.location.href='faculty-list.html'">
+              <span>👨‍🏫</span> View Directory
+            </button>
+          </div>
         </div>
 
-        <!-- Statistics Cards Section -->
+        <!-- 4 KPI Statistics Cards Grid -->
         <div class="stats-grid">
-          <div class="stat-card gradient-primary">
-            <div class="stat-icon">👥</div>
+          <div class="stat-card kpi-blue">
+            <div class="stat-icon-wrapper">👥</div>
             <div class="stat-info">
-              <h3>Total Faculty</h3>
-              <p id="totalFaculty" class="stat-number">0</p>
+              <span class="stat-label">Total Faculty</span>
+              <h3 id="totalFaculty" class="stat-number">0</h3>
+              <span class="stat-trend">Registered Members</span>
             </div>
           </div>
 
-          <div class="stat-card gradient-secondary">
-            <div class="stat-icon">🏢</div>
+          <div class="stat-card kpi-purple">
+            <div class="stat-icon-wrapper">🏢</div>
             <div class="stat-info">
-              <h3>Total Departments</h3>
-              <p id="totalDepartments" class="stat-number">0</p>
+              <span class="stat-label">Total Departments</span>
+              <h3 id="totalDepartments" class="stat-number">0</h3>
+              <span class="stat-trend">Academic Units</span>
+            </div>
+          </div>
+
+          <div class="stat-card kpi-emerald">
+            <div class="stat-icon-wrapper">📚</div>
+            <div class="stat-info">
+              <span class="stat-label">Courses Managed</span>
+              <h3 id="totalCourses" class="stat-number">0</h3>
+              <span class="stat-trend">Active Curriculums</span>
+            </div>
+          </div>
+
+          <div class="stat-card kpi-amber">
+            <div class="stat-icon-wrapper">💡</div>
+            <div class="stat-info">
+              <span class="stat-label">Expertise Domains</span>
+              <h3 id="totalExpertise" class="stat-number">0</h3>
+              <span class="stat-trend">Research Specializations</span>
             </div>
           </div>
         </div>
 
-        <!-- Recent Activity Section -->
-        <div class="recent-activity-section">
-          <div class="section-header">
-            <h3>Recently Added Faculty</h3>
-            <button class="view-all-btn" onclick="window.location.href='faculty-list.html'">View All</button>
-          </div>
+        <!-- Dashboard 2-Column Main Layout -->
+        <div class="dashboard-main-grid">
           
-          <div class="recent-list" id="recentFacultyList">
-             <!-- Dynamically populated via JS -->
-             <div class="loading-state">Loading recent activity...</div>
+          <!-- LEFT COLUMN (Analytics & Recent Activity) -->
+          <div class="dashboard-left-col">
+            
+            <!-- Department Distribution Card -->
+            <div class="dashboard-card">
+              <div class="card-header">
+                <div>
+                  <h3 class="card-title">Department Distribution Overview</h3>
+                  <p class="card-subtitle">Faculty breakdown across academic departments</p>
+                </div>
+                <button class="btn-text-action" onclick="window.location.href='department-list.html'">Manage Depts →</button>
+              </div>
+              <div class="dept-distribution-list" id="deptDistributionContainer">
+                <div class="loading-state">Loading department breakdown...</div>
+              </div>
+            </div>
+
+            <!-- Recently Added Faculty Card -->
+            <div class="dashboard-card">
+              <div class="card-header">
+                <div>
+                  <h3 class="card-title">Recently Added Faculty Members</h3>
+                  <p class="card-subtitle">Latest faculty additions registered in the portal</p>
+                </div>
+                <button class="btn-text-action" onclick="window.location.href='faculty-list.html'">View Full Directory →</button>
+              </div>
+              
+              <div class="recent-faculty-grid" id="recentFacultyList">
+                <div class="loading-state">Loading recent activity...</div>
+              </div>
+            </div>
+
           </div>
+
+          <!-- RIGHT COLUMN (Sidebar Widgets) -->
+          <div class="dashboard-right-col">
+            
+            <!-- Quick Management Actions Widget -->
+            <div class="dashboard-widget admin-only">
+              <h4 class="widget-title">⚡ Quick Management Actions</h4>
+              <div class="widget-action-list">
+                <a href="add-faculty.html" class="widget-action-item">
+                  <span class="action-icon">➕</span>
+                  <div class="action-text">
+                    <strong>Add New Faculty</strong>
+                    <span>Register a professor profile</span>
+                  </div>
+                </a>
+                <a href="add-department.html" class="widget-action-item">
+                  <span class="action-icon">🏢</span>
+                  <div class="action-text">
+                    <strong>Add Department</strong>
+                    <span>Create a new academic unit</span>
+                  </div>
+                </a>
+                <a href="faculty-list.html" class="widget-action-item">
+                  <span class="action-icon">📋</span>
+                  <div class="action-text">
+                    <strong>Manage Directory</strong>
+                    <span>Edit or remove faculty records</span>
+                  </div>
+                </a>
+              </div>
+            </div>
+
+            <!-- System & Portal Health Status Widget -->
+            <div class="dashboard-widget">
+              <h4 class="widget-title">🌐 Portal Health & Access</h4>
+              <div class="health-status-list">
+                <div class="health-item">
+                  <span class="health-indicator online"></span>
+                  <div class="health-info">
+                    <strong>Database Connection</strong>
+                    <span class="health-sub">Active & Connected</span>
+                  </div>
+                </div>
+                <div class="health-item">
+                  <span class="health-indicator online"></span>
+                  <div class="health-info">
+                    <strong>Role Access Level</strong>
+                    <span class="health-sub" id="widgetRoleSub">Administrator</span>
+                  </div>
+                </div>
+                <div class="health-item">
+                  <span class="health-indicator online"></span>
+                  <div class="health-info">
+                    <strong>Directory Search API</strong>
+                    <span class="health-sub">Operational</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Top Research Expertise Tags Widget -->
+            <div class="dashboard-widget">
+              <h4 class="widget-title">💡 Research Specializations</h4>
+              <div class="expertise-cloud" id="topExpertiseCloud">
+                <span class="tag-pill expertise">Artificial Intelligence</span>
+                <span class="tag-pill expertise">Machine Learning</span>
+                <span class="tag-pill expertise">Data Science</span>
+                <span class="tag-pill expertise">Software Engineering</span>
+                <span class="tag-pill expertise">Cybersecurity</span>
+                <span class="tag-pill expertise">Mathematics</span>
+              </div>
+            </div>
+
+          </div>
+
         </div>
 
       </div>
@@ -84,20 +217,34 @@
           window.location.href = '../index.html';
         };
 
-        // Role-based visibility
+        // Role-based visibility & Header Badges
         const role = localStorage.getItem('role');
-        if (role !== 'admin') {
+        const isAdmin = role === 'admin';
+
+        if (!isAdmin) {
           document.querySelectorAll('.admin-only').forEach(el => el.style.display = 'none');
         }
 
+        const roleTextDisplay = document.getElementById('roleTextDisplay');
+        const roleIconDisplay = document.getElementById('roleIconDisplay');
+        const sidebarUserTitle = document.getElementById('sidebarUserTitle');
+        const sidebarUserStatus = document.getElementById('sidebarUserStatus');
+        const widgetRoleSub = document.getElementById('widgetRoleSub');
+        const welcomeBadgeText = document.getElementById('welcomeBadgeText');
+
+        if (roleTextDisplay) roleTextDisplay.textContent = isAdmin ? 'Administrator' : 'Guest Visitor';
+        if (roleIconDisplay) roleIconDisplay.textContent = isAdmin ? '⚡' : '👤';
+        if (sidebarUserTitle) sidebarUserTitle.textContent = isAdmin ? 'Admin Account' : 'Guest Visitor';
+        if (sidebarUserStatus) sidebarUserStatus.textContent = isAdmin ? 'Full Control' : 'Read-Only';
+        if (widgetRoleSub) widgetRoleSub.textContent = isAdmin ? 'Admin (Full Access)' : 'Guest (Read Only)';
+        if (welcomeBadgeText) welcomeBadgeText.textContent = isAdmin ? 'ADMINISTRATOR DASHBOARD' : 'FACULTY DIRECTORY PORTAL';
+
         // Init Sidebar Toggle
         const toggleBtn = document.getElementById("sidebarToggle");
-        const sidebar = document.getElementById("sidebar");
-        if (toggleBtn && sidebar) {
-            toggleBtn.addEventListener("click", () => {
-                sidebar.classList.toggle("sidebar-closed");
-                document.body.classList.toggle("sidebar-closed");
-            });
+        if (toggleBtn) {
+          toggleBtn.addEventListener("click", () => {
+            document.body.classList.toggle("sidebar-closed");
+          });
         }
 
         // Highlight active page
@@ -107,9 +254,9 @@
         if (!currentFile) currentFile = 'index.html';
 
         navLinks.forEach(link => {
-            if(link.getAttribute('href') === currentFile) {
-                link.classList.add('active-page');
-            }
+          if(link.getAttribute('href') === currentFile) {
+            link.classList.add('active-page');
+          }
         });
       }
 
