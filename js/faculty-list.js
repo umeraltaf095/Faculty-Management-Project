@@ -53,18 +53,51 @@ async function fetchFaculty() {
 
     const url = new URL(apiBaseUrl);
     if (name) url.searchParams.append("name", name);
-    if (department) url.searchParams.append("department", department);
+    if (department) {
+      url.searchParams.append("department", department);
+      url.searchParams.append("department_name", department);
+    }
     if (courses) url.searchParams.append("courses_taught", courses);
     if (expertise) url.searchParams.append("expertise", expertise);
 
     const response = await fetch(url.toString());
     const data = await response.json();
-    let list = Array.isArray(data) ? data : [data];
+    let list = Array.isArray(data) ? data : (data && typeof data === 'object' ? [data] : []);
 
-    // Filter by interests on frontend if query parameter exists
+    // Filter by name on frontend
+    if (name && Array.isArray(list)) {
+      list = list.filter(item => 
+        item && item.name && item.name.toLowerCase().includes(name.toLowerCase())
+      );
+    }
+
+    // Filter by department on frontend (checking department_name and department fields)
+    if (department && Array.isArray(list)) {
+      list = list.filter(item => {
+        if (!item) return false;
+        const deptName = (item.department_name || item.department || "").toString().toLowerCase();
+        return deptName.includes(department.toLowerCase());
+      });
+    }
+
+    // Filter by courses on frontend
+    if (courses && Array.isArray(list)) {
+      list = list.filter(item => 
+        item && item.courses_taught && item.courses_taught.toLowerCase().includes(courses.toLowerCase())
+      );
+    }
+
+    // Filter by expertise on frontend
+    if (expertise && Array.isArray(list)) {
+      list = list.filter(item => 
+        item && item.expertise && item.expertise.toLowerCase().includes(expertise.toLowerCase())
+      );
+    }
+
+    // Filter by interests on frontend
     if (interests && Array.isArray(list)) {
       list = list.filter(item => 
-        item.interests && item.interests.toLowerCase().includes(interests.toLowerCase())
+        item && item.interests && item.interests.toLowerCase().includes(interests.toLowerCase())
       );
     }
 
